@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/demos.css">
 </head>
 <body>
 
@@ -116,6 +117,7 @@
         <h3>Gestión de vacaciones</h3>
         <p>Solicitud, aprobación y cálculo automático de días de vacaciones, con autenticación corporativa y flujos de aprobación por jerarquía.</p>
         <ul class="chips"><li>Laravel 12</li><li>React</li><li>Inertia</li><li>Bitrix24</li></ul>
+        <button class="demo-btn" data-demo="vacaciones">▶ Probar demo interactivo</button>
       </article>
 
       <article class="proj reveal">
@@ -123,6 +125,7 @@
         <h3>Sistema de reservas</h3>
         <p>Plataforma para gestionar y procesar reservas de pasajeros con una interfaz moderna y reactiva.</p>
         <ul class="chips"><li>Laravel 12</li><li>React</li><li>Tailwind</li></ul>
+        <button class="demo-btn" data-demo="reservas">▶ Probar demo interactivo</button>
       </article>
 
       <article class="proj reveal">
@@ -130,6 +133,7 @@
         <h3>Mesa de tickets</h3>
         <p>Gestión de solicitudes de soporte técnico con autenticación automática y flujos de aprobación integrados al CRM.</p>
         <ul class="chips"><li>Laravel 12</li><li>Bitrix24</li></ul>
+        <button class="demo-btn" data-demo="tickets">▶ Probar demo interactivo</button>
       </article>
 
       <article class="proj reveal">
@@ -249,6 +253,23 @@
   </div>
 </footer>
 
+<!-- Modal de demos -->
+<div class="modal" id="demoModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+    <header class="modal-head">
+      <div class="modal-head-l">
+        <span class="modal-badge">● DEMO EN VIVO</span>
+        <h3 id="demoTitle">Demo</h3>
+      </div>
+      <button class="modal-close" data-close aria-label="Cerrar demo">✕</button>
+    </header>
+    <div class="modal-note">Recreación interactiva con datos ficticios — no conectada a ningún sistema real ni a datos de clientes.</div>
+    <div class="modal-body" id="demoBody"></div>
+  </div>
+</div>
+
 <script src="assets/main.js" defer></script>
+<script src="assets/demos.js" defer></script>
 </body>
 </html>
