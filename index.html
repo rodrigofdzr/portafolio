@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodrigofdzr — Desarrollo de Software a Medida</title>
+<meta name="description" content="Diseño y construyo software empresarial a medida: plataformas web, integraciones (Bitrix24, Zoho) y sistemas internos con Laravel, React y Frappe.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="Rodrigofdzr — Desarrollo de Software a Medida">
+<meta property="og:description" content="Plataformas web, integraciones y sistemas internos con Laravel, React y Frappe.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<!-- Nav -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span class="brand-name">Rodrigo<span class="accent">fdzr</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#stack">Stack</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto" class="btn btn-sm">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="badge reveal">● Disponible para nuevos proyectos</div>
+    <h1 class="reveal">Construyo el software<br>que tu empresa <span class="grad">necesita</span>.</h1>
+    <p class="lead reveal">Desarrollo plataformas web, integraciones empresariales y sistemas internos a medida. De la idea al producto en producción — con código mantenible y resultados reales.</p>
+    <div class="hero-cta reveal">
+      <a href="#contacto" class="btn btn-lg">Iniciar un proyecto →</a>
+      <a href="#proyectos" class="btn btn-ghost btn-lg">Ver proyectos</a>
+    </div>
+    <div class="hero-stats reveal">
+      <div class="stat"><span class="stat-num" data-count="15">0</span><span class="stat-label">apps en producción</span></div>
+      <div class="stat"><span class="stat-num" data-count="8">0</span><span class="stat-label">integraciones empresariales</span></div>
+      <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-suffix">%</span><span class="stat-label">a medida</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Servicios -->
+<section id="servicios" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Servicios</span>
+      <h2>Lo que puedo construir para ti</h2>
+      <p>Cubro todo el ciclo: arquitectura, desarrollo, integración y despliegue.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <div class="card-icon">🌐</div>
+        <h3>Aplicaciones web a medida</h3>
+        <p>Plataformas full-stack rápidas y escalables con Laravel + React/Inertia. Paneles, portales de cliente y herramientas internas.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-icon">🔗</div>
+        <h3>Integraciones empresariales</h3>
+        <p>Conecto tus sistemas: CRM (Bitrix24), correo y OAuth (Zoho), ERPs y APIs externas. Datos sincronizados en tiempo real.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-icon">👥</div>
+        <h3>Sistemas de RRHH y operación</h3>
+        <p>Vacaciones, asistencia, tickets de soporte, inventario y capacitación. Automatizo los procesos que consumen tu tiempo.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-icon">⚙️</div>
+        <h3>ERP y plataformas Frappe</h3>
+        <p>Implementación y personalización de Frappe/ERPNext (HRMS) para gestión integral de talento y nómina.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-icon">🚀</div>
+        <h3>Despliegue e infraestructura</h3>
+        <p>Docker, servidores Linux y CI. Pongo tu producto en línea con HTTPS, dominios y un entorno reproducible.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-icon">🧩</div>
+        <h3>Mantenimiento y evolución</h3>
+        <p>Soporte continuo, nuevas funciones y refactorización. Tu software crece sin acumular deuda técnica.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Proyectos -->
+<section id="proyectos" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Proyectos</span>
+      <h2>Casos reales en producción</h2>
+      <p>Ecosistema completo de aplicaciones desarrolladas para un cliente del <strong>sector aeronáutico</strong>. Más de 15 sistemas integrados que operan a diario.</p>
+    </div>
+    <div class="grid grid-3">
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">RRHH</span></div>
+        <h3>Gestión de vacaciones</h3>
+        <p>Solicitud, aprobación y cálculo automático de días de vacaciones, con autenticación corporativa y flujos de aprobación por jerarquía.</p>
+        <ul class="chips"><li>Laravel 12</li><li>React</li><li>Inertia</li><li>Bitrix24</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Reservas</span></div>
+        <h3>Sistema de reservas</h3>
+        <p>Plataforma para gestionar y procesar reservas de pasajeros con una interfaz moderna y reactiva.</p>
+        <ul class="chips"><li>Laravel 12</li><li>React</li><li>Tailwind</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Soporte TI</span></div>
+        <h3>Mesa de tickets</h3>
+        <p>Gestión de solicitudes de soporte técnico con autenticación automática y flujos de aprobación integrados al CRM.</p>
+        <ul class="chips"><li>Laravel 12</li><li>Bitrix24</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Integración</span></div>
+        <h3>Sincronización de correo</h3>
+        <p>Panel que sincroniza cuentas entre Zoho Mail y el CRM con verificación en tiempo real y reintentos automáticos.</p>
+        <ul class="chips"><li>Laravel 12</li><li>Zoho OAuth</li><li>Guzzle</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Talento</span></div>
+        <h3>HRMS / Gestión de talento</h3>
+        <p>Implementación de Frappe/ERPNext para gestión integral de recursos humanos, expedientes y nómina.</p>
+        <ul class="chips"><li>Frappe</li><li>Python</li><li>Docker</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Operación</span></div>
+        <h3>Mostrador de operaciones</h3>
+        <p>Aplicación de desk para gestionar operaciones aeroportuarias con una interfaz de escritorio moderna.</p>
+        <ul class="chips"><li>Laravel 12</li><li>React</li><li>TypeScript</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Fidelización</span></div>
+        <h3>Programa de lealtad</h3>
+        <p>Gestión de puntos, recompensas y beneficios para clientes frecuentes del programa de millas.</p>
+        <ul class="chips"><li>Laravel 12</li><li>Inertia</li><li>Tailwind</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Inventario</span></div>
+        <h3>Control de inventario</h3>
+        <p>Sistema de administración de inventario con control de existencias y operaciones CRUD a la medida.</p>
+        <ul class="chips"><li>PHP</li><li>MySQL</li></ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top"><span class="proj-tag">Conocimiento</span></div>
+        <h3>Wiki corporativa</h3>
+        <p>Base de conocimiento y documentación de procesos para toda la organización.</p>
+        <ul class="chips"><li>DokuWiki</li><li>PHP</li></ul>
+      </article>
+
+    </div>
+    <p class="proj-note reveal">+ capacitación, control de accesos, gestión de activos, días libres y más sistemas internos.</p>
+  </div>
+</section>
+
+<!-- Stack -->
+<section id="stack" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Stack tecnológico</span>
+      <h2>Herramientas con las que trabajo</h2>
+      <p>Tecnologías modernas, probadas y mantenibles a largo plazo.</p>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-pill">Laravel 12</div>
+      <div class="stack-pill">PHP 8.2</div>
+      <div class="stack-pill">React</div>
+      <div class="stack-pill">Inertia.js</div>
+      <div class="stack-pill">TypeScript</div>
+      <div class="stack-pill">Tailwind CSS</div>
+      <div class="stack-pill">shadcn/ui</div>
+      <div class="stack-pill">Vue</div>
+      <div class="stack-pill">Frappe / ERPNext</div>
+      <div class="stack-pill">Python</div>
+      <div class="stack-pill">MySQL</div>
+      <div class="stack-pill">Docker</div>
+      <div class="stack-pill">Bitrix24 API</div>
+      <div class="stack-pill">Zoho OAuth</div>
+      <div class="stack-pill">Linux</div>
+      <div class="stack-pill">Git</div>
+    </div>
+  </div>
+</section>
+
+<!-- Proceso -->
+<section id="proceso" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cómo trabajo</span>
+      <h2>De la idea a producción</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><span class="step-num">01</span><h3>Descubrimiento</h3><p>Entiendo tu negocio, procesos y objetivos. Definimos el alcance y las prioridades reales.</p></div>
+      <div class="step reveal"><span class="step-num">02</span><h3>Diseño y arquitectura</h3><p>Propongo la solución técnica, el modelo de datos y un plan de entregas por fases.</p></div>
+      <div class="step reveal"><span class="step-num">03</span><h3>Desarrollo iterativo</h3><p>Construyo en ciclos cortos con entregas frecuentes para que veas avances desde el inicio.</p></div>
+      <div class="step reveal"><span class="step-num">04</span><h3>Despliegue y soporte</h3><p>Pongo el producto en producción y te acompaño con mantenimiento y mejoras continuas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section id="contacto" class="section">
+  <div class="container">
+    <div class="cta reveal">
+      <span class="eyebrow">Contacto</span>
+      <h2>¿Tienes un proyecto en mente?</h2>
+      <p>Cuéntame qué necesitas y te respondo con una propuesta. Sin compromiso.</p>
+      <div class="cta-actions">
+        <a href="mailto:rodrigofr840@gmail.com?subject=Nuevo%20proyecto%20de%20software" class="btn btn-lg">✉ Escríbeme</a>
+        <a href="https://wa.me/?text=Hola%20Rodrigo,%20me%20interesa%20un%20proyecto" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <p class="cta-mail"><a href="mailto:rodrigofr840@gmail.com">rodrigofr840@gmail.com</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="brand"><span class="brand-mark">&lt;/&gt;</span> <span class="brand-name">Rodrigo<span class="accent">fdzr</span></span></span>
+    <span class="footer-meta">Desarrollo de software a medida · © <span id="year">2026</span></span>
+  </div>
+</footer>
+
+<script src="assets/main.js" defer></script>
+</body>
+</html>
