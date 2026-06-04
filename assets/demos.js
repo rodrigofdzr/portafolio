@@ -12,7 +12,7 @@
   const DEMOS = {
     vacaciones: { title: 'Gestión de vacaciones', render: renderVacaciones },
     tickets:    { title: 'Mesa de tickets',        render: renderTickets },
-    reservas:   { title: 'Reservas de vuelo',      render: renderReservas },
+    reservas:   { title: 'Reserva de salas de reuniones', render: renderReservas },
   };
 
   // ---- Modal control ----
@@ -267,108 +267,121 @@
      DEMO 3 — RESERVAS DE VUELO
      ========================================================= */
   function renderReservas(root) {
-    let step = 1;
-    let flight = null, seat = null;
-    const FLIGHTS = [
-      { id: 'TA-204', from: 'MEX', to: 'CUN', dep: '07:40', arr: '09:55', dur: '2h 15m', price: 1890 },
-      { id: 'TA-318', from: 'MEX', to: 'CUN', dep: '13:10', arr: '15:20', dur: '2h 10m', price: 2150 },
-      { id: 'TA-452', from: 'MEX', to: 'CUN', dep: '19:25', arr: '21:35', dur: '2h 10m', price: 1740 },
+    const ROOMS = [
+      { id: 'norte',     name: 'Sala Norte',     cap: 8,  ico: '🪟' },
+      { id: 'sur',       name: 'Sala Sur',       cap: 4,  ico: '🛋️' },
+      { id: 'ejecutiva', name: 'Sala Ejecutiva', cap: 12, ico: '👔' },
+      { id: 'creativa',  name: 'Sala Creativa',  cap: 6,  ico: '🎨' },
     ];
-    const OCC = new Set(['1A','1C','2F','3B','4D','4E','5A','6C','7F','8B','8E','9A','10D']);
-
-    function stepper() {
-      const labels = ['Vuelo','Asiento','Confirmación'];
-      return `<div class="stepper">${labels.map((l, i) => {
-        const n = i + 1, cls = n === step ? 'active' : (n < step ? 'done' : '');
-        const bar = i < 2 ? '<span class="bar"></span>' : '';
-        return `<div class="st ${cls}"><span class="dot">${n < step ? '✓' : n}</span><span>${l}</span></div>${bar}`;
-      }).join('')}</div>`;
-    }
+    const HOURS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+    const OCC = {
+      norte:     new Set([9, 10, 14]),
+      sur:       new Set([11, 12, 16]),
+      ejecutiva: new Set([8, 13, 15]),
+      creativa:  new Set([10, 11, 12]),
+    };
+    let room = ROOMS[0].id, date = '2026-07-15', selStart = null, selEnd = null;
+    const bookings = [];
+    const lbl = h => String(h).padStart(2, '0') + ':00';
+    const occSet = () => OCC[room];
 
     function render() {
-      root.innerHTML = stepper() + `<div id="rvBody"></div>`;
-      const b = root.querySelector('#rvBody');
-      if (step === 1) renderSearch(b);
-      else if (step === 2) renderSeats(b);
-      else renderConfirm(b);
+      root.innerHTML = `
+        <div class="rb-wrap">
+          <div class="rb-left">
+            <div class="d-field" style="margin-bottom:16px"><label>Fecha</label>
+              <input class="d-input" type="date" id="rbDate" value="${date}"></div>
+            <div class="d-sub" style="margin-bottom:10px">Elige una sala</div>
+            <div class="rb-rooms" id="rbRooms"></div>
+          </div>
+          <div class="rb-right">
+            <div class="d-title" id="rbTitle"></div>
+            <div class="d-sub">Toca la hora de inicio y la de fin. Las ocupadas están en rojo.</div>
+            <div class="rb-slots" id="rbSlots"></div>
+            <div class="rb-info" id="rbInfo"></div>
+            <button class="d-btn" id="rbBook" style="width:100%" disabled>Reservar sala</button>
+            <div class="rb-list" id="rbList"></div>
+          </div>
+        </div>`;
+      renderRooms(); renderTitle(); renderSlots(); renderInfo(); renderList();
+      root.querySelector('#rbDate').addEventListener('change', e => {
+        date = e.target.value; selStart = selEnd = null; renderSlots(); renderInfo();
+      });
+      root.querySelector('#rbBook').addEventListener('click', book);
     }
 
-    function renderSearch(b) {
-      b.innerHTML = `
-        <div class="d-row" style="margin-bottom:18px;align-items:flex-end">
-          <div class="d-field"><label>Origen</label><select class="d-select"><option>Ciudad de México (MEX)</option></select></div>
-          <div class="d-field"><label>Destino</label><select class="d-select"><option>Cancún (CUN)</option></select></div>
-          <div class="d-field"><label>Fecha</label><input class="d-input" type="date" value="2026-07-15"></div>
-        </div>
-        <div class="d-sub">3 vuelos disponibles · selecciona uno para continuar</div>
-        <div id="rvFlights"></div>`;
-      const fl = b.querySelector('#rvFlights');
-      FLIGHTS.forEach(f => {
-        const card = el('div', 'flight' + (flight && flight.id === f.id ? ' sel' : ''));
-        card.innerHTML = `
-          <div class="route">
-            <div><div class="time">${f.dep}</div><div class="path">${f.from}</div></div>
-            <div class="path">${f.dur}<span class="line">✈ ───────</span>${f.id}</div>
-            <div><div class="time">${f.arr}</div><div class="path">${f.to}</div></div>
-          </div>
-          <div class="price">$${f.price.toLocaleString('es-MX')}<small>MXN</small></div>`;
-        card.addEventListener('click', () => { flight = f; seat = null; step = 2; render(); });
-        fl.appendChild(card);
+    function renderRooms() {
+      const wrap = root.querySelector('#rbRooms');
+      wrap.innerHTML = '';
+      ROOMS.forEach(r => {
+        const c = el('div', 'rb-room' + (r.id === room ? ' sel' : ''));
+        c.innerHTML = `<span class="rb-room-ico">${r.ico}</span><div><b>${r.name}</b><span>Capacidad ${r.cap} personas</span></div>`;
+        c.addEventListener('click', () => {
+          room = r.id; selStart = selEnd = null;
+          renderRooms(); renderTitle(); renderSlots(); renderInfo();
+        });
+        wrap.appendChild(c);
       });
     }
 
-    function renderSeats(b) {
-      b.innerHTML = `
-        <div class="d-title">Elige tu asiento · Vuelo ${flight.id}</div>
-        <div class="d-sub">${flight.from} → ${flight.to} · ${flight.dep}</div>
-        <div class="plane"><div class="plane-cabin" id="cabin"></div>
-          <div class="seat-legend">
-            <span><i style="background:var(--surface-2);border:1px solid var(--line-strong)"></i>Libre</span>
-            <span><i style="background:rgba(255,107,107,.2)"></i>Ocupado</span>
-            <span><i style="background:linear-gradient(120deg,var(--accent),var(--accent-2))"></i>Tu asiento</span>
-          </div>
-        </div>
-        <div class="d-row" style="margin-top:20px;justify-content:space-between">
-          <button class="d-btn d-btn-ghost" id="rvBack">‹ Cambiar vuelo</button>
-          <button class="d-btn" id="rvNext" ${seat ? '' : 'disabled'}>Continuar ${seat ? '· ' + seat : ''} ›</button>
-        </div>`;
-      const cabin = b.querySelector('#cabin');
-      const cols = ['A','B','C','D','E','F'];
-      for (let r = 1; r <= 10; r++) {
-        const row = el('div', 'seat-row');
-        row.appendChild(el('span', 'rn', r));
-        cols.forEach((c, i) => {
-          if (i === 3) row.appendChild(el('span', 'seat-aisle'));
-          const code = r + c;
-          const occ = OCC.has(code);
-          const s = el('div', 'seat' + (occ ? ' occ' : '') + (seat === code ? ' sel' : ''), c);
-          if (!occ) s.addEventListener('click', () => { seat = code; renderSeats(b); });
-          row.appendChild(s);
-        });
-        cabin.appendChild(row);
-      }
-      b.querySelector('#rvBack').addEventListener('click', () => { step = 1; render(); });
-      b.querySelector('#rvNext').addEventListener('click', () => { if (seat) { step = 3; render(); } });
+    function renderTitle() {
+      const r = ROOMS.find(x => x.id === room);
+      root.querySelector('#rbTitle').textContent = `${r.name} · disponibilidad del día`;
     }
 
-    function renderConfirm(b) {
-      const code = 'TA' + Math.floor(1000 + Math.random() * 8999) + String.fromCharCode(65 + Math.floor(Math.random() * 26));
-      b.innerHTML = `
-        <div class="conf">
-          <div class="conf-ico">✓</div>
-          <h4>¡Reserva confirmada!</h4>
-          <p>Tu lugar está asegurado. Recibirías tu pase de abordar por correo.</p>
-          <div class="conf-card">
-            <div class="conf-line"><span class="k">Código de reserva</span><span class="v conf-code">${code}</span></div>
-            <div class="conf-line"><span class="k">Vuelo</span><span class="v">${flight.id}</span></div>
-            <div class="conf-line"><span class="k">Ruta</span><span class="v">${flight.from} → ${flight.to}</span></div>
-            <div class="conf-line"><span class="k">Salida</span><span class="v">${flight.dep}</span></div>
-            <div class="conf-line"><span class="k">Asiento</span><span class="v">${seat}</span></div>
-            <div class="conf-line"><span class="k">Total</span><span class="v">$${flight.price.toLocaleString('es-MX')} MXN</span></div>
-          </div>
-          <button class="d-btn d-btn-ghost" id="rvReset" style="margin-top:20px">Hacer otra reserva</button>
-        </div>`;
-      b.querySelector('#rvReset').addEventListener('click', () => { step = 1; flight = null; seat = null; render(); });
+    function renderSlots() {
+      const wrap = root.querySelector('#rbSlots');
+      wrap.innerHTML = '';
+      HOURS.forEach(h => {
+        const occ = occSet().has(h);
+        const inRange = selStart != null && selEnd != null && h >= selStart && h <= selEnd;
+        const isEdge = h === selStart || h === selEnd;
+        const cls = 'rb-slot' + (occ ? ' occ' : '') + (inRange ? ' in' : '') + (isEdge ? ' edge' : '');
+        const s = el('div', cls, lbl(h));
+        if (!occ) s.addEventListener('click', () => pick(h));
+        wrap.appendChild(s);
+      });
+    }
+
+    function pick(h) {
+      if (selStart == null || selEnd != null) { selStart = h; selEnd = null; }
+      else if (h < selStart) { selStart = h; }
+      else {
+        let ok = true;
+        for (let x = selStart; x <= h; x++) if (occSet().has(x)) ok = false;
+        if (ok) selEnd = h; else { selStart = h; selEnd = null; }
+      }
+      renderSlots(); renderInfo();
+    }
+
+    function renderInfo() {
+      const info = root.querySelector('#rbInfo');
+      const btn = root.querySelector('#rbBook');
+      if (selStart == null) { info.innerHTML = 'Selecciona la hora de inicio.'; btn.disabled = true; return; }
+      if (selEnd == null) { info.innerHTML = `Inicio: <b>${lbl(selStart)}</b> · elige la hora de fin.`; btn.disabled = true; return; }
+      const hrs = (selEnd - selStart) + 1;
+      info.innerHTML = `<b>${lbl(selStart)}</b> → <b>${lbl(selEnd + 1)}</b> · ${hrs} h reservada(s)`;
+      btn.disabled = false;
+    }
+
+    function book() {
+      if (selStart == null || selEnd == null) return;
+      const r = ROOMS.find(x => x.id === room);
+      const from = lbl(selStart), to = lbl(selEnd + 1);
+      for (let x = selStart; x <= selEnd; x++) occSet().add(x);
+      bookings.unshift({ room: r.name, date, from, to });
+      selStart = selEnd = null;
+      renderSlots(); renderInfo(); renderList();
+    }
+
+    function renderList() {
+      const list = root.querySelector('#rbList');
+      if (!bookings.length) { list.innerHTML = ''; return; }
+      list.innerHTML = '<div class="rb-list-h">Reservas confirmadas</div>' + bookings.map(b => `
+        <div class="rb-item">
+          <div><div class="rng">${b.room}</div><div class="dd">${b.date} · ${b.from}–${b.to}</div></div>
+          <span class="tag appr">Confirmada</span>
+        </div>`).join('');
     }
 
     render();

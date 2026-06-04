@@ -160,6 +160,34 @@
 .conf-line .k{color:var(--muted)}.conf-line .v{font-weight:600}
 .conf-code{font-family:'JetBrains Mono',monospace;color:var(--accent)!important}
 
+/* ===== Demo: Reserva de salas ===== */
+.rb-wrap{display:grid;grid-template-columns:270px 1fr;gap:26px}
+.rb-rooms{display:flex;flex-direction:column;gap:8px}
+.rb-room{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);
+  border-radius:11px;padding:11px 13px;cursor:pointer;transition:.15s}
+.rb-room:hover{border-color:var(--accent)}
+.rb-room.sel{border-color:var(--accent);background:rgba(91,140,255,.08)}
+.rb-room-ico{font-size:1.3rem}
+.rb-room b{display:block;font-size:.9rem}
+.rb-room span{font-size:.76rem;color:var(--muted)}
+.rb-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.rb-slot{padding:11px 0;text-align:center;font-size:.85rem;border-radius:9px;cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--line-strong);color:var(--text);transition:.12s}
+.rb-slot:hover:not(.occ){border-color:var(--accent)}
+.rb-slot.occ{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.25);
+  color:rgba(255,107,107,.6);cursor:not-allowed;text-decoration:line-through}
+.rb-slot.in{background:rgba(91,140,255,.18);border-color:transparent}
+.rb-slot.edge{background:linear-gradient(120deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;border-color:transparent}
+.rb-info{background:var(--surface);border:1px dashed var(--line-strong);border-radius:10px;
+  padding:11px 13px;margin-bottom:12px;font-size:.88rem}
+.rb-info b{color:var(--accent)}
+.rb-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.rb-list-h{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.rb-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.85rem}
+.rb-item .rng{font-weight:600}.rb-item .dd{color:var(--muted);font-size:.78rem}
+@media(max-width:760px){.rb-wrap{grid-template-columns:1fr}}
+
 /* ===== Responsive demos ===== */
 @media(max-width:760px){
   .vac-wrap{grid-template-columns:1fr}
