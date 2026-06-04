@@ -45,3 +45,14 @@ const cio = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.5 });
 counters.forEach(c => cio.observe(c));
+
+// Ver más / menos proyectos
+const moreBtn = document.getElementById('moreProjects');
+if (moreBtn) {
+  const grid = document.getElementById('projGrid');
+  moreBtn.addEventListener('click', () => {
+    const expanded = grid.classList.toggle('show-extra');
+    if (expanded) grid.querySelectorAll('.proj-extra').forEach(c => c.classList.add('in'));
+    moreBtn.textContent = expanded ? 'Ver menos proyectos' : 'Ver más proyectos (+6)';
+  });
+}

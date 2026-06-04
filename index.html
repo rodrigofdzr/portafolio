@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=3">
-<link rel="stylesheet" href="assets/demos.css?v=3">
+<link rel="stylesheet" href="assets/styles.css?v=4">
+<link rel="stylesheet" href="assets/demos.css?v=4">
 </head>
 <body>
 
@@ -79,7 +79,7 @@
           <a href="https://www.linkedin.com/in/rodrigofdezr/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.7H9.1V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM6.8 20.4H3.2V9h3.6v11.4ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>
           </a>
-          <a href="mailto:rodrigofr840@gmail.com" aria-label="Correo" title="Correo">
+          <a href="mailto:rodrigofdzr@icloud.com" aria-label="Correo" title="Correo">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg>
           </a>
           <a href="https://wa.me/524424158901" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
@@ -162,7 +162,7 @@
       <h2>Casos reales en producción</h2>
       <p>Más de 15 sistemas que desarrollé para un cliente del <strong>sector aeronáutico</strong> y que su equipo usa todos los días para operar la empresa.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3" id="projGrid">
 
       <article class="proj reveal">
         <div class="proj-top"><span class="proj-tag">RRHH</span></div>
@@ -209,42 +209,42 @@
         <div class="proj-benefit">Descubre quiénes son tus clientes más valiosos y qué rutas prefieren, para decidir mejor.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Atención al cliente</span></div>
         <h3>Bandeja de correo compartida</h3>
         <p>Bandeja común donde el equipo recibe, asigna y responde los correos de clientes, con notas internas.</p>
         <div class="proj-benefit">Tu equipo atiende todos los correos de clientes desde un solo lugar, sin que nada se pierda.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Talento</span></div>
         <h3>Gestión de talento (RRHH)</h3>
         <p>Plataforma integral de recursos humanos: expedientes, asistencia, permisos, desempeño y nómina en un solo sistema.</p>
         <div class="proj-benefit">Reúne expedientes, nómina y recursos humanos de toda la empresa en un solo lugar.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Activos TI</span></div>
         <h3>Control de equipos y accesos</h3>
         <p>Registro de equipos asignados y de los accesos de cada empleado, con auditoría y reportes de alta y baja.</p>
         <div class="proj-benefit">Sabes qué equipo y qué accesos tiene cada empleado, y generas reportes de alta y baja en segundos.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Integración</span></div>
         <h3>Sincronización de cuentas</h3>
         <p>Verifica y mantiene al día las cuentas de empleados entre el correo (Zoho) y el CRM (Bitrix24).</p>
         <div class="proj-benefit">Mantiene las cuentas y datos al día entre plataformas, automáticamente y sin captura manual.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Inventario TI</span></div>
         <h3>Inventario de equipos de cómputo</h3>
         <p>Catálogo de computadoras y equipos por empleado, área y departamento, con búsqueda e importación de datos.</p>
         <div class="proj-benefit">Ten a la mano qué computadora usa cada quién y sus características, con búsqueda al instante.</div>
       </article>
 
-      <article class="proj reveal">
+      <article class="proj reveal proj-extra">
         <div class="proj-top"><span class="proj-tag">Conocimiento</span></div>
         <h3>Wiki corporativa</h3>
         <p>Base de conocimiento y documentación de procesos, editable y consultable por toda la organización.</p>
@@ -252,6 +252,7 @@
       </article>
 
     </div>
+    <div class="proj-more reveal"><button id="moreProjects" class="more-btn" type="button">Ver más proyectos (+6)</button></div>
     <p class="proj-note reveal">+ otros sistemas internos a la medida del cliente (control de accesos, permisos y más).</p>
   </div>
 </section>
@@ -348,10 +349,10 @@
       <h2>¿Tienes un proyecto en mente?</h2>
       <p>Cuéntame qué necesitas y te respondo con una propuesta. Sin compromiso.</p>
       <div class="cta-actions">
-        <a href="mailto:rodrigofr840@gmail.com?subject=Nuevo%20proyecto%20de%20software" class="btn btn-lg">✉ Escríbeme</a>
+        <a href="mailto:rodrigofdzr@icloud.com?subject=Nuevo%20proyecto%20de%20software" class="btn btn-lg">✉ Escríbeme</a>
         <a href="https://wa.me/524424158901?text=Hola%20Rodrigo,%20me%20interesa%20un%20proyecto" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">WhatsApp</a>
       </div>
-      <p class="cta-mail"><a href="mailto:rodrigofr840@gmail.com">rodrigofr840@gmail.com</a></p>
+      <p class="cta-mail"><a href="mailto:rodrigofdzr@icloud.com">rodrigofdzr@icloud.com</a></p>
     </div>
   </div>
 </section>
@@ -381,7 +382,7 @@
   </div>
 </div>
 
-<script src="assets/main.js?v=3" defer></script>
-<script src="assets/demos.js?v=3" defer></script>
+<script src="assets/main.js?v=4" defer></script>
+<script src="assets/demos.js?v=4" defer></script>
 </body>
 </html>
