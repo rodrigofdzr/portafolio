@@ -242,6 +242,13 @@ a{color:inherit;text-decoration:none}
   background:rgba(30,184,204,.1);border:1px solid rgba(30,184,204,.25);border-radius:11px}
 .troyan-stat b{display:block;font-size:.98rem;margin-bottom:3px}
 .troyan-stat span{color:var(--muted);font-size:.88rem;line-height:1.5}
+.troyan-cta{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+  margin-top:30px;padding:22px 26px;border-radius:16px;
+  background:linear-gradient(120deg,rgba(30,184,204,.12),rgba(10,53,80,.28));
+  border:1px solid rgba(30,184,204,.32)}
+.troyan-cta p{font-size:1.06rem;color:var(--text);margin:0;max-width:560px}
+.troyan-cta strong{color:var(--tcyan-2)}
+@media(max-width:600px){.troyan-cta{flex-direction:column;text-align:center}}
 
 @media(max-width:780px){
   .troyan-grid{grid-template-columns:1fr;gap:24px}
