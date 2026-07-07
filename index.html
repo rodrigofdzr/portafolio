@@ -3,40 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rodrigofdzr — Desarrollo de Software a Medida</title>
-<meta name="description" content="Creo software a la medida de tu negocio: aplicaciones web, automatización de procesos y sistemas internos fáciles de usar que te ahorran tiempo.">
-<meta name="theme-color" content="#0a0a0f">
-<meta property="og:title" content="Rodrigofdzr — Desarrollo de Software a Medida">
-<meta property="og:description" content="Software a la medida de tu negocio: aplicaciones web, automatización y sistemas internos fáciles de usar.">
+<title>Rodrigo Fernández — Software a la medida · Custom Software</title>
+<meta name="description" content="Estudio de desarrollo de software a la medida: aplicaciones web, automatización e integración de sistemas, con visión por computadora e IA aplicada. Querétaro, MX.">
+<meta name="theme-color" content="#F4F1EA">
+<meta property="og:title" content="Rodrigo Fernández — Software a la medida">
+<meta property="og:description" content="Convierto procesos manuales en herramientas digitales que tu equipo usa todos los días.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=4">
-<link rel="stylesheet" href="assets/demos.css?v=4">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=5">
+<link rel="stylesheet" href="assets/demos.css?v=5">
 </head>
 <body>
-
-<!-- Background -->
-<div class="bg-grid" aria-hidden="true"></div>
-<div class="bg-glow" aria-hidden="true"></div>
 
 <!-- Nav -->
 <header class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#top" class="brand">
-      <span class="brand-mark">&lt;/&gt;</span>
-      <span class="brand-name">Rodrigo<span class="accent">fdzr</span></span>
-    </a>
-    <nav class="nav-links">
-      <a href="#servicios">Servicios</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#confianza">Confianza</a>
-      <a href="#sobre-mi">Sobre mí</a>
-      <a href="#troyan">Troyan Robotics</a>
-      <a href="#contacto" class="btn btn-sm">Hablemos</a>
+    <a href="#top" class="brand">Rodrigo Fernández</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#servicios" data-i18n="nav.servicios">Servicios</a>
+      <a href="#proyectos" data-i18n="nav.proyectos">Proyectos</a>
+      <a href="#metodo" data-i18n="nav.metodo">Método</a>
+      <a href="#troyan">Troyan</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-pressed="false" aria-label="Switch to English / Cambiar idioma">
+        <span class="lang-opt is-active" data-lang="es">ES</span><span class="lang-sep">/</span><span class="lang-opt" data-lang="en">EN</span>
+      </button>
+      <a href="#contacto" class="btn btn-sm" data-i18n="nav.cta">Hablemos</a>
     </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú" data-i18n-aria="a11y.menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </header>
 
@@ -45,314 +40,270 @@
 <!-- Hero -->
 <section class="hero">
   <div class="container">
-    <div class="badge reveal"><span class="dot-live">●</span> Disponible para nuevos proyectos</div>
-    <h1 class="reveal">Construyo el software<br>que tu empresa <span class="grad">necesita</span>.</h1>
-    <p class="lead reveal">Convierto los procesos manuales de tu negocio en herramientas digitales simples de usar. Te ahorro tiempo, reduzco errores y dejo todo funcionando.</p>
+    <p class="kicker reveal" data-i18n="hero.kicker">( Desarrollo de software a la medida — Querétaro, MX )</p>
+    <h1 class="reveal" data-i18n="hero.title">Software que trabaja <em>como tu negocio</em> lo necesita.</h1>
+    <p class="lead reveal" data-i18n="hero.lead">Convierto procesos manuales en herramientas digitales que tu equipo usa todos los días. Menos errores, cero captura doble, más horas para lo que importa.</p>
     <div class="hero-cta reveal">
-      <a href="#contacto" class="btn btn-lg">Iniciar un proyecto →</a>
-      <a href="#proyectos" class="btn btn-ghost btn-lg">Ver proyectos</a>
+      <a href="#contacto" class="btn btn-lg"><span data-i18n="hero.cta1">Iniciar un proyecto</span> <span class="btn-arrow" aria-hidden="true">↗</span></a>
+      <a href="#proyectos" class="link-underline" data-i18n="hero.cta2">Ver casos reales</a>
     </div>
-    <div class="hero-stats reveal">
-      <div class="stat"><span class="stat-num" data-count="15">0</span><span class="stat-label">aplicaciones en uso real</span></div>
-      <div class="stat"><span class="stat-num" data-count="8">0</span><span class="stat-label">sistemas conectados entre sí</span></div>
-      <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-suffix">%</span><span class="stat-label">a tu medida</span></div>
-    </div>
+    <p class="hero-badge reveal"><span class="dot-live" aria-hidden="true"></span> <span data-i18n="hero.badge">Disponible para nuevos proyectos</span></p>
+    <dl class="hero-stats reveal">
+      <div class="figure"><dt><span class="fig-num" data-count="15">0</span><span class="fig-plus">+</span></dt><dd data-i18n="hero.stat1">sistemas en producción</dd></div>
+      <div class="figure"><dt><span class="fig-num" data-count="8">0</span></dt><dd data-i18n="hero.stat2">sistemas conectados entre sí</dd></div>
+      <div class="figure"><dt><span class="fig-num" data-count="100">0</span><span class="fig-plus">%</span></dt><dd data-i18n="hero.stat3">a tu medida</dd></div>
+    </dl>
   </div>
 </section>
 
+<!-- Cinta marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-seq" data-i18n="marquee">Apps a la medida ✱ Automatización ✱ Integración de sistemas ✱ Visión por computadora ✱ IA aplicada ✱&nbsp;</span>
+    <span class="marquee-seq" data-i18n="marquee">Apps a la medida ✱ Automatización ✱ Integración de sistemas ✱ Visión por computadora ✱ IA aplicada ✱&nbsp;</span>
+  </div>
+</div>
+
 <!-- Sobre mí -->
-<section id="sobre-mi" class="section section-alt">
+<section id="sobre-mi" class="section">
   <div class="container">
     <div class="about">
-      <div class="about-aside reveal">
-        <div class="about-avatar">
-          <span class="about-mono">RF</span>
-          <!-- Sustituye assets/rodrigo.jpg por tu foto. Si no existe, se muestra el monograma. -->
-          <img src="assets/rodrigo.jpg" alt="Rodrigo" loading="lazy" onerror="this.remove()">
+      <figure class="about-media reveal">
+        <div class="about-frame">
+          <span class="about-mono" aria-hidden="true">RF</span>
+          <img src="assets/rodrigo.jpg" alt="Rodrigo Fernández" loading="lazy" onerror="this.remove()">
         </div>
-        <div class="about-name">Rodrigo</div>
-        <div class="about-role">Desarrollador de Software · Founder de Troyan Robotics</div>
+        <figcaption class="fig-caption" data-i18n="about.fig">Fig. 01 — Rodrigo, founder de Troyan Robotics</figcaption>
         <div class="about-socials">
           <a href="https://github.com/rodrigofdzr" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
           </a>
           <a href="https://www.linkedin.com/in/rodrigofdezr/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.7H9.1V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM6.8 20.4H3.2V9h3.6v11.4ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.7H9.1V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM6.8 20.4H3.2V9h3.6v11.4ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>
           </a>
           <a href="mailto:rodrigofdzr@icloud.com" aria-label="Correo" title="Correo">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg>
           </a>
           <a href="https://wa.me/524424158901" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4ZM12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4ZM12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Z"/></svg>
           </a>
           <a href="https://instagram.com/rodrigofdzr" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
-      </div>
-
-      <div class="about-text reveal">
-        <span class="eyebrow">Sobre mí</span>
-        <h2>Hola, soy Rodrigo</h2>
-        <p>Ayudo a las empresas a <strong>trabajar mejor con software hecho a su medida</strong>. Tomo esos procesos que hoy quitan tiempo —o que viven en hojas de cálculo y WhatsApp— y los convierto en herramientas digitales simples y confiables.</p>
-        <p>En los últimos años creé y puse en marcha <strong>más de 15 sistemas</strong> para una empresa del sector aeronáutico —vacaciones, soporte, reserva de salas, avisos a pasajeros, inventario y más— que su equipo usa todos los días para operar.</p>
-        <p>También soy <strong>founder de Troyan Robotics</strong>, donde lidero un equipo que compite en robótica a nivel internacional. Me gusta resolver problemas reales y entregar cosas que de verdad funcionen, no solo que se vean bien.</p>
-        <ul class="about-points">
-          <li><span class="ap-ico">🎯</span><div><b>Primero entiendo tu negocio</b><span>Escucho cómo trabajas y luego propongo la solución, no al revés.</span></div></li>
-          <li><span class="ap-ico">🛠️</span><div><b>Un solo responsable de todo</b><span>Me encargo del proyecto completo: diseño, desarrollo y puesta en marcha.</span></div></li>
-          <li><span class="ap-ico">🤝</span><div><b>No desaparezco al entregar</b><span>Te acompaño con soporte y mejoras conforme tu negocio crece.</span></div></li>
-        </ul>
-        <a href="#contacto" class="btn btn-lg" style="margin-top:8px">Trabajemos juntos →</a>
+      </figure>
+      <div class="about-body">
+        <p class="eyebrow reveal" data-i18n="about.eyebrow">( Sobre mí )</p>
+        <h2 class="reveal" data-i18n="about.title">Hola, soy <em>Rodrigo</em>.</h2>
+        <p class="about-lead reveal" data-i18n="about.lead">Ayudo a las empresas a trabajar mejor con software hecho a la medida de cómo operan.</p>
+        <p class="reveal" data-i18n="about.p1">Tomo esos procesos que hoy quitan tiempo —los que viven en hojas de cálculo y WhatsApp— y los convierto en herramientas simples y confiables. En los últimos años puse en marcha más de 15 sistemas para una empresa del sector aeronáutico; su equipo opera con ellos todos los días.</p>
+        <p class="reveal" data-i18n="about.p2">También soy founder de <strong>Troyan Robotics</strong>, donde lidero un equipo que compite en robótica autónoma a nivel internacional. Me gusta resolver problemas reales y entregar cosas que funcionan de verdad.</p>
+        <ol class="about-points">
+          <li class="reveal"><span class="point-num" aria-hidden="true">01</span><div><b data-i18n="about.pt1t">Primero entiendo tu negocio</b><span data-i18n="about.pt1d">Escucho cómo trabajas y luego propongo la solución, no al revés.</span></div></li>
+          <li class="reveal"><span class="point-num" aria-hidden="true">02</span><div><b data-i18n="about.pt2t">Un solo responsable de todo</b><span data-i18n="about.pt2d">Diseño, desarrollo y puesta en marcha: me encargo del proyecto completo.</span></div></li>
+          <li class="reveal"><span class="point-num" aria-hidden="true">03</span><div><b data-i18n="about.pt3t">No desaparezco al entregar</b><span data-i18n="about.pt3d">Te acompaño con soporte y mejoras conforme tu negocio crece.</span></div></li>
+        </ol>
+        <a href="#contacto" class="link-underline reveal" data-i18n="about.cta">Trabajemos juntos ↗</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Servicios -->
-<section id="servicios" class="section">
+<section id="servicios" class="section section-tight">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Servicios</span>
-      <h2>Lo que puedo hacer por tu negocio</h2>
-      <p>Soluciones digitales pensadas para resolver problemas reales y ahorrarte tiempo.</p>
-    </div>
-    <div class="grid grid-2">
-      <article class="card reveal">
-        <div class="card-icon">🌐</div>
-        <h3>Aplicaciones a la medida</h3>
-        <p>Sistemas hechos para tu forma de trabajar, no plantillas genéricas. Fáciles de usar y disponibles desde cualquier dispositivo, listos para tu día a día.</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-icon">🔗</div>
-        <h3>Conecto tus herramientas</h3>
-        <p>Hago que los programas que ya usas (tu CRM, tu correo, tus plataformas) trabajen juntos y compartan información solos, sin captura doble ni errores.</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-icon">⚡</div>
-        <h3>Automatizo tus procesos</h3>
-        <p>Vacaciones, soporte, inventario, reservas… Convierto tareas manuales y hojas de cálculo en procesos automáticos que te ahorran horas cada semana.</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-icon">🤝</div>
-        <h3>Te acompaño de principio a fin</h3>
-        <p>Desde la idea hasta tenerlo funcionando, y después con soporte y mejoras. Tú te enfocas en tu negocio; yo me encargo de la tecnología.</p>
-      </article>
-
-      <article class="card card-feature reveal">
-        <div class="cf-main">
-          <span class="cf-badge">👁️ Capacidad avanzada</span>
-          <h3>Visión por computadora e IA para tu negocio</h3>
-          <p>Que una cámara haga por ti el trabajo repetitivo. Es la misma tecnología que aplico en robótica de competencia en <a href="#troyan">Troyan Robotics</a>, ahora al servicio de tu operación.</p>
-        </div>
-        <ul class="cf-list">
-          <li><b>Lectura automática</b><span>Leer placas, folios o documentos a partir de imágenes, sin capturar a mano.</span></li>
-          <li><b>Inspección de calidad</b><span>Detectar defectos en productos o piezas con una cámara, sin revisarlos uno por uno.</span></li>
-          <li><b>Conteo y detección</b><span>Contar personas o vehículos y avisar automáticamente cuando algo pasa.</span></li>
-        </ul>
-      </article>
-    </div>
+    <header class="section-head reveal">
+      <p class="eyebrow" data-i18n="serv.eyebrow">( Servicios )</p>
+      <h2 data-i18n="serv.title">Lo que puedo hacer <em>por tu negocio</em>.</h2>
+    </header>
+    <ol class="service-list">
+      <li class="service reveal">
+        <span class="service-num" aria-hidden="true">01</span>
+        <h3 data-i18n="serv.s1t">Aplicaciones a la medida</h3>
+        <p data-i18n="serv.s1d">Sistemas hechos para tu forma de trabajar, no plantillas genéricas. Fáciles de usar y disponibles desde cualquier dispositivo.</p>
+      </li>
+      <li class="service reveal">
+        <span class="service-num" aria-hidden="true">02</span>
+        <h3 data-i18n="serv.s2t">Conecto tus herramientas</h3>
+        <p data-i18n="serv.s2d">Tu CRM, tu correo, tus plataformas: trabajando juntos y compartiendo información solos, sin captura doble.</p>
+      </li>
+      <li class="service reveal">
+        <span class="service-num" aria-hidden="true">03</span>
+        <h3 data-i18n="serv.s3t">Automatizo tus procesos</h3>
+        <p data-i18n="serv.s3d">Vacaciones, soporte, inventario, reservas… Tareas manuales y hojas de cálculo se vuelven procesos automáticos que ahorran horas cada semana.</p>
+      </li>
+      <li class="service reveal">
+        <span class="service-num" aria-hidden="true">04</span>
+        <h3 data-i18n="serv.s4t">Te acompaño de principio a fin</h3>
+        <p data-i18n="serv.s4d">De la idea a tenerlo funcionando, y después con soporte y mejoras. Tú te enfocas en tu negocio; yo, en la tecnología.</p>
+      </li>
+    </ol>
+    <aside class="feature-panel reveal">
+      <div class="feature-main">
+        <p class="eyebrow eyebrow-gold" data-i18n="serv.f.eyebrow">( Capacidad avanzada )</p>
+        <h3 data-i18n="serv.f.title">Visión por computadora <em>e IA</em> para tu operación.</h3>
+        <p data-i18n="serv.f.desc">Que una cámara haga por ti el trabajo repetitivo. La misma tecnología que aplico en robótica de competencia en <a href="#troyan">Troyan Robotics</a>, al servicio de tu negocio.</p>
+      </div>
+      <ul class="feature-list">
+        <li><b data-i18n="serv.f.i1t">Lectura automática</b><span data-i18n="serv.f.i1d">Placas, folios y documentos leídos desde imágenes, sin capturar a mano.</span></li>
+        <li><b data-i18n="serv.f.i2t">Inspección de calidad</b><span data-i18n="serv.f.i2d">Defectos detectados con una cámara, sin revisar pieza por pieza.</span></li>
+        <li><b data-i18n="serv.f.i3t">Conteo y detección</b><span data-i18n="serv.f.i3d">Personas o vehículos contados en automático, con avisos cuando algo pasa.</span></li>
+      </ul>
+    </aside>
   </div>
 </section>
 
 <!-- Proyectos -->
-<section id="proyectos" class="section section-alt">
+<section id="proyectos" class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Proyectos</span>
-      <h2>Casos reales en producción</h2>
-      <p>Más de 15 sistemas que desarrollé para un cliente del <strong>sector aeronáutico</strong> y que su equipo usa todos los días para operar la empresa.</p>
-    </div>
-    <div class="grid grid-3" id="projGrid">
+    <header class="section-head reveal">
+      <p class="eyebrow" data-i18n="proj.eyebrow">( Proyectos )</p>
+      <h2 data-i18n="proj.title">Casos reales, <em>en producción</em>.</h2>
+      <p class="section-sub" data-i18n="proj.sub">Más de 15 sistemas desarrollados para un cliente del sector aeronáutico, en uso diario por su equipo para operar la empresa.</p>
+    </header>
+    <div class="proj-grid">
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">RRHH</span></div>
-        <h3>Gestión de vacaciones</h3>
-        <p>Solicitud, aprobación y cálculo automático de días de vacaciones y home office, con flujos de aprobación por jerarquía.</p>
-        <div class="proj-benefit">Reduce la solicitud y aprobación de vacaciones de días a minutos, sin papeleo.</div>
-        <button class="demo-btn" data-demo="vacaciones">▶ Probar demo interactivo</button>
+      <article class="cell cell-feature reveal">
+        <p class="cell-tag" data-i18n="proj.p1tag">RRHH</p>
+        <h3 data-i18n="proj.p1t">Gestión de vacaciones</h3>
+        <p class="cell-desc" data-i18n="proj.p1d">Solicitud, aprobación por jerarquía y cálculo automático de días de vacaciones y home office. De días de papeleo a minutos.</p>
+        <button class="demo-btn" data-demo="vacaciones" type="button"><span aria-hidden="true">▶</span> <span data-i18n="proj.demo">Probar demo</span></button>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">Operación</span></div>
-        <h3>Reserva de salas de reuniones</h3>
-        <p>Reserva de salas y espacios con calendario, sincronizado al calendario corporativo para evitar choques de horario.</p>
-        <div class="proj-benefit">Tu equipo reserva salas en segundos y nunca se empalman dos juntas en el mismo espacio.</div>
-        <button class="demo-btn" data-demo="reservas">▶ Probar demo interactivo</button>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p2tag">Comunicación</p>
+        <h3 data-i18n="proj.p2t">Avisos de cambios de vuelo</h3>
+        <p class="cell-desc" data-i18n="proj.p2d">Notificación masiva a pasajeros sobre demoras, reprogramaciones o cancelaciones, con registro de todo lo enviado.</p>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">Soporte TI</span></div>
-        <h3>Mesa de tickets</h3>
-        <p>Gestión de solicitudes de soporte técnico con acceso automático y flujos de aprobación integrados al sistema de la empresa.</p>
-        <div class="proj-benefit">Centraliza las solicitudes de soporte para que nada se pierda y todo se resuelva a tiempo.</div>
-        <button class="demo-btn" data-demo="tickets">▶ Probar demo interactivo</button>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p3tag">Beneficios</p>
+        <h3 data-i18n="proj.p3t">Pases de viaje para empleados</h3>
+        <p class="cell-desc" data-i18n="proj.p3d">Solicitud, autorización y control de pases y boletos para empleados y sus beneficiarios, sin papel.</p>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">Comunicación</span></div>
-        <h3>Avisos de cambios de vuelo</h3>
-        <p>Notificación masiva a pasajeros sobre demoras, adelantos, reprogramaciones o cancelaciones de sus vuelos, por correo.</p>
-        <div class="proj-benefit">Avisa a cientos de pasajeros de un cambio de vuelo en minutos, con registro de todo lo enviado.</div>
+      <article class="cell cell-feature cell-right reveal">
+        <p class="cell-tag" data-i18n="proj.p4tag">Operación</p>
+        <h3 data-i18n="proj.p4t">Reserva de salas de reuniones</h3>
+        <p class="cell-desc" data-i18n="proj.p4d">Reserva con calendario sincronizado al corporativo: tu equipo aparta salas en segundos y nunca se empalman dos juntas.</p>
+        <button class="demo-btn" data-demo="reservas" type="button"><span aria-hidden="true">▶</span> <span data-i18n="proj.demo">Probar demo</span></button>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">Beneficios</span></div>
-        <h3>Pases de viaje para empleados</h3>
-        <p>Solicitud y aprobación de pases y boletos para empleados y sus beneficiarios, con flujo de autorización completo.</p>
-        <div class="proj-benefit">Automatiza los beneficios de viaje del personal: solicitar, autorizar y controlar pases sin papel.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p5tag">Inteligencia comercial</p>
+        <h3 data-i18n="proj.p5t">Análisis de pasajeros frecuentes</h3>
+        <p class="cell-desc" data-i18n="proj.p5d">Reportes y segmentación de pasajeros y empresas según su comportamiento de vuelo y rutas preferidas.</p>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj-top"><span class="proj-tag">Inteligencia comercial</span></div>
-        <h3>Análisis de pasajeros frecuentes</h3>
-        <p>Reportes y segmentación de pasajeros y empresas según su comportamiento de vuelo y rutas preferidas.</p>
-        <div class="proj-benefit">Descubre quiénes son tus clientes más valiosos y qué rutas prefieren, para decidir mejor.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p6tag">Atención al cliente</p>
+        <h3 data-i18n="proj.p6t">Bandeja de correo compartida</h3>
+        <p class="cell-desc" data-i18n="proj.p6d">Un solo lugar donde el equipo recibe, asigna y responde los correos de clientes, con notas internas.</p>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Atención al cliente</span></div>
-        <h3>Bandeja de correo compartida</h3>
-        <p>Bandeja común donde el equipo recibe, asigna y responde los correos de clientes, con notas internas.</p>
-        <div class="proj-benefit">Tu equipo atiende todos los correos de clientes desde un solo lugar, sin que nada se pierda.</div>
+      <article class="cell cell-feature reveal">
+        <p class="cell-tag" data-i18n="proj.p7tag">Soporte TI</p>
+        <h3 data-i18n="proj.p7t">Mesa de tickets</h3>
+        <p class="cell-desc" data-i18n="proj.p7d">Solicitudes de soporte centralizadas, con accesos automáticos y flujos de aprobación integrados. Nada se pierde.</p>
+        <button class="demo-btn" data-demo="tickets" type="button"><span aria-hidden="true">▶</span> <span data-i18n="proj.demo">Probar demo</span></button>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Talento</span></div>
-        <h3>Gestión de talento (RRHH)</h3>
-        <p>Plataforma integral de recursos humanos: expedientes, asistencia, permisos, desempeño y nómina en un solo sistema.</p>
-        <div class="proj-benefit">Reúne expedientes, nómina y recursos humanos de toda la empresa en un solo lugar.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p8tag">Talento</p>
+        <h3 data-i18n="proj.p8t">Gestión de talento (RRHH)</h3>
+        <p class="cell-desc" data-i18n="proj.p8d">Expedientes, asistencia, permisos, desempeño y nómina de toda la empresa en un solo sistema.</p>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Activos TI</span></div>
-        <h3>Control de equipos y accesos</h3>
-        <p>Registro de equipos asignados y de los accesos de cada empleado, con auditoría y reportes de alta y baja.</p>
-        <div class="proj-benefit">Sabes qué equipo y qué accesos tiene cada empleado, y generas reportes de alta y baja en segundos.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p9tag">Activos TI</p>
+        <h3 data-i18n="proj.p9t">Control de equipos y accesos</h3>
+        <p class="cell-desc" data-i18n="proj.p9d">Qué equipo y qué accesos tiene cada empleado, con auditoría y reportes de alta y baja en segundos.</p>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Integración</span></div>
-        <h3>Sincronización de cuentas</h3>
-        <p>Verifica y mantiene al día las cuentas de empleados entre el correo (Zoho) y el CRM (Bitrix24).</p>
-        <div class="proj-benefit">Mantiene las cuentas y datos al día entre plataformas, automáticamente y sin captura manual.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p10tag">Integración</p>
+        <h3 data-i18n="proj.p10t">Sincronización de cuentas</h3>
+        <p class="cell-desc" data-i18n="proj.p10d">Cuentas y datos de empleados al día entre el correo (Zoho) y el CRM (Bitrix24), automáticamente.</p>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Inventario TI</span></div>
-        <h3>Inventario de equipos de cómputo</h3>
-        <p>Catálogo de computadoras y equipos por empleado, área y departamento, con búsqueda e importación de datos.</p>
-        <div class="proj-benefit">Ten a la mano qué computadora usa cada quién y sus características, con búsqueda al instante.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p11tag">Inventario TI</p>
+        <h3 data-i18n="proj.p11t">Inventario de equipos de cómputo</h3>
+        <p class="cell-desc" data-i18n="proj.p11d">Cada computadora por empleado, área y departamento, con búsqueda al instante e importación de datos.</p>
       </article>
 
-      <article class="proj reveal proj-extra">
-        <div class="proj-top"><span class="proj-tag">Conocimiento</span></div>
-        <h3>Wiki corporativa</h3>
-        <p>Base de conocimiento y documentación de procesos, editable y consultable por toda la organización.</p>
-        <div class="proj-benefit">Ordena toda la documentación y procesos de la empresa, fáciles de encontrar.</div>
+      <article class="cell reveal">
+        <p class="cell-tag" data-i18n="proj.p12tag">Conocimiento</p>
+        <h3 data-i18n="proj.p12t">Wiki corporativa</h3>
+        <p class="cell-desc" data-i18n="proj.p12d">Documentación y procesos de la empresa, editables y fáciles de encontrar para toda la organización.</p>
       </article>
 
     </div>
-    <div class="proj-more reveal"><button id="moreProjects" class="more-btn" type="button">Ver más proyectos (+6)</button></div>
-    <p class="proj-note reveal">+ otros sistemas internos a la medida del cliente (control de accesos, permisos y más).</p>
+    <p class="proj-note reveal" data-i18n="proj.note">+ otros sistemas internos a la medida del cliente: control de accesos, permisos y más.</p>
   </div>
 </section>
 
-<!-- Confianza -->
-<section id="confianza" class="section">
+<!-- Método -->
+<section id="metodo" class="section section-tight">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Calidad y confianza</span>
-      <h2>Tecnología moderna, segura y lista para crecer</h2>
-      <p>Trabajo con herramientas probadas por miles de empresas en el mundo. Tú no necesitas entenderlas: yo me encargo de que tu sistema sea rápido, seguro y fácil de mantener.</p>
-    </div>
-    <div class="trust-grid">
-      <div class="trust-item reveal"><span class="trust-ico">🔒</span><b>Seguro</b><span class="trust-d">Protejo tu información con buenas prácticas de seguridad.</span></div>
-      <div class="trust-item reveal"><span class="trust-ico">⚡</span><b>Rápido y confiable</b><span class="trust-d">Responde bien aunque crezca tu operación.</span></div>
-      <div class="trust-item reveal"><span class="trust-ico">📱</span><b>En todos lados</b><span class="trust-d">Funciona en computadora, tablet y celular.</span></div>
-      <div class="trust-item reveal"><span class="trust-ico">🔧</span><b>Fácil de crecer</b><span class="trust-d">Pensado para adaptarse sin empezar de cero.</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- Proceso -->
-<section id="proceso" class="section section-alt">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Cómo trabajo</span>
-      <h2>De la idea a producción</h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><span class="step-num">01</span><h3>Conversamos</h3><p>Entiendo tu negocio, tus procesos y qué necesitas lograr. Definimos juntos las prioridades.</p></div>
-      <div class="step reveal"><span class="step-num">02</span><h3>Propuesta y plan</h3><p>Te presento la solución y un plan de entregas por etapas, claro y sin sorpresas.</p></div>
-      <div class="step reveal"><span class="step-num">03</span><h3>Lo construimos</h3><p>Voy desarrollando y mostrándote avances con frecuencia, para ajustar sobre la marcha.</p></div>
-      <div class="step reveal"><span class="step-num">04</span><h3>Lanzamiento y soporte</h3><p>Dejo tu sistema funcionando y te acompaño después con soporte y mejoras.</p></div>
-    </div>
+    <header class="section-head reveal">
+      <p class="eyebrow" data-i18n="met.eyebrow">( Método )</p>
+      <h2 data-i18n="met.title">De la idea <em>a producción</em>.</h2>
+    </header>
+    <ol class="steps">
+      <li class="reveal"><span class="step-num" aria-hidden="true">01</span><h3 data-i18n="met.s1t">Conversamos</h3><p data-i18n="met.s1d">Entiendo tu negocio, tus procesos y qué necesitas lograr. Definimos juntos las prioridades.</p></li>
+      <li class="reveal"><span class="step-num" aria-hidden="true">02</span><h3 data-i18n="met.s2t">Propuesta y plan</h3><p data-i18n="met.s2d">Una solución clara y un plan de entregas por etapas, sin sorpresas.</p></li>
+      <li class="reveal"><span class="step-num" aria-hidden="true">03</span><h3 data-i18n="met.s3t">Lo construimos</h3><p data-i18n="met.s3d">Desarrollo mostrándote avances con frecuencia, para ajustar sobre la marcha.</p></li>
+      <li class="reveal"><span class="step-num" aria-hidden="true">04</span><h3 data-i18n="met.s4t">Lanzamiento y soporte</h3><p data-i18n="met.s4d">Tu sistema queda funcionando y te acompaño después con soporte y mejoras.</p></li>
+    </ol>
+    <p class="trust-strip reveal" data-i18n="met.trust">Seguro · Rápido y confiable · En computadora, tablet y celular · Listo para crecer</p>
   </div>
 </section>
 
 <!-- Troyan Robotics -->
-<section id="troyan" class="section troyan-sec">
+<section id="troyan" class="section section-dark">
   <div class="container">
-    <div class="troyan-head reveal">
-      <div class="troyan-logo"><img src="assets/troyan-logo.svg" alt="Logo Troyan Robotics" loading="lazy"></div>
+    <header class="troyan-head reveal">
+      <img class="troyan-logo" src="assets/troyan-logo.svg" alt="Logo Troyan Robotics" loading="lazy">
       <div>
-        <span class="eyebrow troyan-eye">● Proyecto founder</span>
+        <p class="eyebrow eyebrow-gold" data-i18n="troyan.eyebrow">( Proyecto founder )</p>
         <h2>Troyan Robotics</h2>
-        <p class="troyan-tagline">«Competimos en el mundo — construimos el equipo aquí.»</p>
+        <p class="troyan-tagline" data-i18n="troyan.tagline">«Competimos en el mundo — construimos el equipo aquí.»</p>
       </div>
-    </div>
-
+    </header>
     <div class="troyan-grid">
       <div class="troyan-about reveal">
-        <p>Soy <strong>founder de Troyan Robotics</strong>, el equipo competitivo de robótica autónoma de la <strong>Facultad de Informática de la Universidad Autónoma de Querétaro</strong> (Campus Juriquilla). Construimos vehículos y robots autónomos desde cero, aplicando inteligencia artificial, visión por computadora y sistemas embebidos.</p>
-        <p>Nuestra visión: <em>ser un referente nacional en innovación y desarrollo de tecnologías robóticas autónomas, contribuyendo al avance científico en México.</em></p>
-        <p>El sitio <strong>troyanrobotics.com</strong> también es diseño y desarrollo míos, de principio a fin.</p>
-        <div class="troyan-tech">
-          <span>IA</span><span>Visión por computadora</span><span>Fusión de sensores</span>
-          <span>Jetson Nano</span><span>STM32</span><span>Sistemas embebidos</span><span>Sensores ToF</span>
-        </div>
-        <a class="btn troyan-btn" href="https://troyanrobotics.com" target="_blank" rel="noopener">Visitar troyanrobotics.com →</a>
+        <p data-i18n="troyan.p1">Soy founder de Troyan Robotics, el equipo de robótica autónoma de la Facultad de Informática de la Universidad Autónoma de Querétaro (Campus Juriquilla). Construimos vehículos y robots autónomos desde cero, con inteligencia artificial, visión por computadora y sistemas embebidos.</p>
+        <p data-i18n="troyan.p2">Nuestra visión: ser un referente nacional en tecnologías robóticas autónomas y contribuir al avance científico en México.</p>
+        <p data-i18n="troyan.p3">El sitio troyanrobotics.com también es diseño y desarrollo míos, de principio a fin.</p>
+        <ul class="troyan-tech">
+          <li>IA</li><li data-i18n="troyan.tech1">Visión por computadora</li><li data-i18n="troyan.tech2">Fusión de sensores</li><li>Jetson Nano</li><li>STM32</li><li data-i18n="troyan.tech3">Sistemas embebidos</li><li data-i18n="troyan.tech4">Sensores ToF</li>
+        </ul>
+        <a class="link-underline link-gold" href="https://troyanrobotics.com" target="_blank" rel="noopener">troyanrobotics.com ↗</a>
       </div>
-
-      <div class="troyan-stats reveal">
-        <div class="troyan-stat">
-          <span class="ts-ico">🌍</span>
-          <div><b>Único equipo mexicano</b><span>Clasificados al Bosch Future Mobility Challenge 2026 — entre 75 equipos globales (semifinal, Rumania).</span></div>
-        </div>
-        <div class="troyan-stat">
-          <span class="ts-ico">🏆</span>
-          <div><b>Best United Team</b><span>FIRA RoboWorld Cup 2025 · Corea del Sur. Además, Audience Award en el BFMC.</span></div>
-        </div>
-        <div class="troyan-stat">
-          <span class="ts-ico">🥇</span>
-          <div><b>1er lugar autónomo</b><span>Nuestro vehículo logró el primer lugar aplicando IA y visión por computadora en entorno urbano simulado.</span></div>
-        </div>
-        <div class="troyan-stat">
-          <span class="ts-ico">🤖</span>
-          <div><b>Robots construidos por estudiantes</b><span>Flota de robots autónomos diseñada y construida 100% por la nueva generación de Troyan.</span></div>
-        </div>
-      </div>
+      <ol class="troyan-feats">
+        <li class="reveal"><b data-i18n="troyan.f1t">Único equipo mexicano</b><span data-i18n="troyan.f1d">Clasificados al Bosch Future Mobility Challenge 2026 — entre 75 equipos globales (semifinal, Rumania).</span></li>
+        <li class="reveal"><b data-i18n="troyan.f2t">Best United Team</b><span data-i18n="troyan.f2d">FIRA RoboWorld Cup 2025 · Corea del Sur. Además, Audience Award en el BFMC.</span></li>
+        <li class="reveal"><b data-i18n="troyan.f3t">1er lugar autónomo</b><span data-i18n="troyan.f3d">Nuestro vehículo logró el primer lugar aplicando IA y visión por computadora en entorno urbano simulado.</span></li>
+        <li class="reveal"><b data-i18n="troyan.f4t">Robots construidos por estudiantes</b><span data-i18n="troyan.f4d">Flota de robots autónomos diseñada y construida 100% por la nueva generación de Troyan.</span></li>
+      </ol>
     </div>
-
     <div class="troyan-cta reveal">
-      <p>¿Quieres esta tecnología —<strong>visión por computadora e IA</strong>— trabajando en tu negocio?</p>
-      <a class="btn troyan-btn" href="#contacto">Hablemos de tu proyecto →</a>
+      <p data-i18n="troyan.cta">¿Esta tecnología —visión por computadora e IA— trabajando en tu negocio?</p>
+      <a class="btn btn-gold" href="#contacto"><span data-i18n="troyan.ctabtn">Hablemos de tu proyecto</span> <span class="btn-arrow" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
 
 <!-- Contacto -->
-<section id="contacto" class="section">
+<section id="contacto" class="section section-contact">
   <div class="container">
-    <div class="cta reveal">
-      <span class="eyebrow">Contacto</span>
-      <h2>¿Tienes un proyecto en mente?</h2>
-      <p>Cuéntame qué necesitas y te respondo con una propuesta. Sin compromiso.</p>
-      <div class="cta-actions">
-        <a href="mailto:rodrigofdzr@icloud.com?subject=Nuevo%20proyecto%20de%20software" class="btn btn-lg">✉ Escríbeme</a>
-        <a href="https://wa.me/524424158901?text=Hola%20Rodrigo,%20me%20interesa%20un%20proyecto" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-      <p class="cta-mail"><a href="mailto:rodrigofdzr@icloud.com">rodrigofdzr@icloud.com</a></p>
+    <p class="eyebrow reveal" data-i18n="con.eyebrow">( Contacto )</p>
+    <h2 class="contact-title reveal" data-i18n="con.title"><em>¿Hablamos?</em></h2>
+    <p class="section-sub reveal" data-i18n="con.sub">Cuéntame qué necesitas y te respondo con una propuesta. Sin compromiso.</p>
+    <div class="contact-actions reveal">
+      <a class="contact-mail" href="mailto:rodrigofdzr@icloud.com?subject=Nuevo%20proyecto%20de%20software">rodrigofdzr@icloud.com</a>
+      <a class="btn" href="https://wa.me/524424158901?text=Hola%20Rodrigo,%20me%20interesa%20un%20proyecto" target="_blank" rel="noopener">WhatsApp <span class="btn-arrow" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
@@ -361,8 +312,9 @@
 
 <footer class="footer">
   <div class="container footer-inner">
-    <span class="brand"><span class="brand-mark">&lt;/&gt;</span> <span class="brand-name">Rodrigo<span class="accent">fdzr</span></span></span>
-    <span class="footer-meta">Desarrollo de software a medida · © <span id="year">2026</span></span>
+    <span class="footer-brand">Rodrigo Fernández</span>
+    <span class="footer-meta"><span data-i18n="footer.meta">Desarrollo de software a medida</span> · © <span id="year">2026</span></span>
+    <span class="footer-coords">QRO, MX — 20°35'N 100°23'W</span>
   </div>
 </footer>
 
@@ -372,17 +324,18 @@
   <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
     <header class="modal-head">
       <div class="modal-head-l">
-        <span class="modal-badge">● DEMO EN VIVO</span>
+        <span class="modal-badge" data-i18n="modal.badge">● DEMO EN VIVO</span>
         <h3 id="demoTitle">Demo</h3>
       </div>
-      <button class="modal-close" data-close aria-label="Cerrar demo">✕</button>
+      <button class="modal-close" data-close aria-label="Cerrar demo" data-i18n-aria="a11y.close">✕</button>
     </header>
-    <div class="modal-note">Recreación interactiva con datos ficticios — no conectada a ningún sistema real ni a datos de clientes.</div>
+    <div class="modal-note" data-i18n="modal.note">Recreación interactiva con datos ficticios — no conectada a ningún sistema real ni a datos de clientes.</div>
     <div class="modal-body" id="demoBody"></div>
   </div>
 </div>
 
-<script src="assets/main.js?v=4" defer></script>
-<script src="assets/demos.js?v=4" defer></script>
+<script src="assets/main.js?v=5" defer></script>
+<script src="assets/i18n.js?v=5" defer></script>
+<script src="assets/demos.js?v=5" defer></script>
 </body>
 </html>
