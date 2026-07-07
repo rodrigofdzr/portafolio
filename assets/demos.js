@@ -99,7 +99,7 @@
       const days = businessDays(start, end);
       const ok = days <= av;
       info.innerHTML = `<b>${fmt(start)}</b> → <b>${fmt(end)}</b><br>${days} día(s) hábil(es)` +
-        (ok ? '' : ` · <span style="color:#ff6b6b">excede tu saldo (${av})</span>`);
+        (ok ? '' : ` · <span style="color:var(--bad)">excede tu saldo (${av})</span>`);
       submit.disabled = !ok;
     }
 
@@ -129,7 +129,7 @@
         <div class="cal-grid">${cells}</div>
         <div class="cal-legend">
           <span><i style="background:linear-gradient(120deg,var(--accent),var(--accent-2))"></i>Selección</span>
-          <span><i style="background:rgba(91,140,255,.2)"></i>Rango</span>
+          <span><i style="background:rgba(138,75,38,.14)"></i>Rango</span>
           <span><i style="background:var(--surface-2)"></i>Fin de semana (no cuenta)</span>
         </div>`;
     }

@@ -102,6 +102,7 @@
     'troyan.p1': "I'm the founder of Troyan Robotics, the autonomous robotics team of the Informatics Faculty at the Autonomous University of Querétaro (Juriquilla Campus). We build autonomous vehicles and robots from scratch with AI, computer vision and embedded systems.",
     'troyan.p2': 'Our vision: to become a national reference in autonomous robotics and contribute to scientific progress in Mexico.',
     'troyan.p3': 'The troyanrobotics.com site is also my design and development, end to end.',
+    'troyan.tech0': 'AI',
     'troyan.tech1': 'Computer vision',
     'troyan.tech2': 'Sensor fusion',
     'troyan.tech3': 'Embedded systems',
