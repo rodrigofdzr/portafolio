@@ -1,0 +1,796 @@
+# Re-skin Aurora Dark + animaciones — Plan de implementación
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Aplicar la piel "Aurora Dark" (violeta/menta, vidrio, oscuro) y el módulo de animaciones sobre la estructura publicada, según el spec `docs/superpowers/specs/2026-07-09-aurora-dark-reskin-design.md`.
+
+**Architecture:** Re-skin puro: `index.html` recibe ediciones puntuales (no reescritura), `styles.css` y `demos.css` se reescriben con los tokens nuevos manteniendo TODOS los nombres de selectores, `motion.js` es un módulo nuevo autocontenido, `i18n.js` gana una línea (evento `i18n:applied`). Copy, diccionario EN, `main.js` y `demos.js` intactos.
+
+**Tech Stack:** HTML5, CSS3 (custom properties, backdrop-filter, keyframes), JS vanilla (IntersectionObserver, TreeWalker, rAF). Fuentes: Space Grotesk + JetBrains Mono (Fraunces se elimina).
+
+## Global Constraints
+
+- Sin build, sin dependencias, sin librerías de animación. GitHub Pages tal cual.
+- Tokens exactos del spec §3: `--void:#0B0B12`, `--surface:rgba(255,255,255,.04)`, `--surface-2:rgba(255,255,255,.07)`, `--glass-line:rgba(255,255,255,.09)`, `--glass-line-strong:rgba(255,255,255,.16)`, `--text:#F2F1F7`, `--text-soft:#A5A2BA`, `--text-mute:#8F8CA6`, `--violet:#7C5CFF`, `--violet-soft:#9B7CFF`, `--mint:#5CFFD8`, `--grad:linear-gradient(90deg,var(--violet),var(--mint))`.
+- **Ningún selector cambia de nombre**: el HTML conserva sus clases (`.eyebrow-gold`, `.btn-gold`, `.link-gold`, `.section-dark` incluidas — se re-mapean a la paleta nueva en CSS).
+- Copy ES/EN y datos factuales: cero cambios. `demos.js`, `main.js`, imágenes: intactos.
+- `prefers-reduced-motion` apaga: aurora, cascada, magnéticos, glow, blink terminal. `(pointer:fine)` requerido para magnéticos y glow.
+- Animaciones solo con `transform`/`opacity`; `pointermove` con throttle rAF y listeners `passive`.
+- Assets a `?v=6`. Commits en español con `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>`.
+- Verificación local: `python3 -m http.server 8080` (si el puerto está ocupado, usar otro).
+
+---
+
+### Task 1: `index.html` ediciones puntuales + evento en `i18n.js`
+
+**Files:**
+- Modify: `index.html` (7 ediciones exactas, NO reescritura)
+- Modify: `assets/i18n.js` (1 línea)
+
+**Interfaces:**
+- Produces: divs `.aurora > .aurora-a/.aurora-b` (Task 2 los estiliza), `<script motion.js?v=6>` (Task 4 crea el archivo), evento `i18n:applied` (Task 4 lo escucha), `.cursor-blink` en footer (Task 2 lo estiliza).
+
+- [ ] **Step 1: Aplicar estas 7 ediciones exactas en `index.html`**
+
+Edición 1 — link de fuentes (quitar Fraunces):
+```html
+<!-- ANTES -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- DESPUÉS -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+```
+
+Edición 2 — theme-color:
+```html
+<!-- ANTES --> <meta name="theme-color" content="#F4F1EA">
+<!-- DESPUÉS --> <meta name="theme-color" content="#0B0B12">
+```
+
+Edición 3 — aurora tras `<body>`:
+```html
+<!-- ANTES -->
+<body>
+
+<!-- Nav -->
+<!-- DESPUÉS -->
+<body>
+
+<div class="aurora" aria-hidden="true"><span class="aurora-a"></span><span class="aurora-b"></span></div>
+
+<!-- Nav -->
+```
+
+Edición 4 — marca del nav:
+```html
+<!-- ANTES --> <a href="#top" class="brand">Rodrigo Fernández</a>
+<!-- DESPUÉS --> <a href="#top" class="brand">rodrigo.fdzr</a>
+```
+
+Edición 5 — guiño terminal en footer:
+```html
+<!-- ANTES -->
+    <span class="footer-coords">QRO, MX — 20°35'N 100°23'W</span>
+<!-- DESPUÉS -->
+    <span class="footer-coords">QRO, MX — 20°35'N 100°23'W · ~/qro.mx $ <span class="cursor-blink" aria-hidden="true">▊</span></span>
+```
+
+Edición 6 — scripts (motion.js nuevo, después de i18n.js):
+```html
+<!-- ANTES -->
+<script src="assets/main.js?v=5" defer></script>
+<script src="assets/i18n.js?v=5" defer></script>
+<script src="assets/demos.js?v=5" defer></script>
+<!-- DESPUÉS -->
+<script src="assets/main.js?v=6" defer></script>
+<script src="assets/i18n.js?v=6" defer></script>
+<script src="assets/motion.js?v=6" defer></script>
+<script src="assets/demos.js?v=6" defer></script>
+```
+
+Edición 7 — versionado de CSS:
+```html
+<!-- ANTES -->
+<link rel="stylesheet" href="assets/styles.css?v=5">
+<link rel="stylesheet" href="assets/demos.css?v=5">
+<!-- DESPUÉS -->
+<link rel="stylesheet" href="assets/styles.css?v=6">
+<link rel="stylesheet" href="assets/demos.css?v=6">
+```
+
+- [ ] **Step 2: Añadir el evento en `assets/i18n.js`**
+
+En la función `apply(lang)`, tras la línea `try { localStorage.setItem('lang', lang); } catch (e) { /* modo privado */ }` y antes del cierre `}` de la función, añadir:
+
+```js
+    document.dispatchEvent(new CustomEvent('i18n:applied', { detail: { lang: lang } }));
+```
+
+- [ ] **Step 3: Verificar**
+
+```bash
+node --check assets/i18n.js
+grep -c 'Fraunces' index.html            # → 0 (grep exit 1)
+grep -c '?v=6' index.html                # → 6 (2 css + 4 js)
+grep -c '?v=5' index.html                # → 0 (grep exit 1)
+grep -c 'aurora-a\|aurora-b\|cursor-blink\|rodrigo.fdzr\|motion.js' index.html   # → 5 líneas en total ≥5
+grep -c "i18n:applied" assets/i18n.js    # → 1
+grep -c '#0B0B12' index.html             # → 1
+```
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add index.html assets/i18n.js
+git commit -m "Aurora: preparación de index.html (aurora, marca, fuentes, v=6) y evento i18n:applied
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
+
+---
+
+### Task 2: `assets/styles.css` — reescritura con la piel Aurora Dark
+
+**Files:**
+- Modify: `assets/styles.css` (reescritura completa)
+
+**Interfaces:**
+- Consumes: clases existentes del HTML (sin cambios) + `.aurora/.aurora-a/.aurora-b/.cursor-blink` de Task 1.
+- Produces: clases de cascada `.w-mask/.w/.cascade-in` y vars `--mx/--my` en `.cell::after` que `motion.js` (Task 4) manipula.
+
+- [ ] **Step 1: Reemplazar `assets/styles.css` completo con este contenido**
+
+```css
+/* ============================================================
+   Aurora Dark — rodrigo.fdzr
+   Re-skin sobre la estructura Editorial (mismos selectores)
+   ============================================================ */
+:root{
+  --void:#0B0B12;
+  --surface:rgba(255,255,255,.04);
+  --surface-2:rgba(255,255,255,.07);
+  --glass-line:rgba(255,255,255,.09);
+  --glass-line-strong:rgba(255,255,255,.16);
+  --text:#F2F1F7;
+  --text-soft:#A5A2BA;
+  --text-mute:#8F8CA6;
+  --violet:#7C5CFF;
+  --violet-soft:#9B7CFF;
+  --mint:#5CFFD8;
+  --grad:linear-gradient(90deg,var(--violet),var(--mint));
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--void);
+  color:var(--text);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+.container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+::selection{background:var(--violet);color:#fff}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+
+/* ===== Aurora de fondo ===== */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.aurora span{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+.aurora-a{width:640px;height:640px;left:55%;top:-240px;
+  background:radial-gradient(circle,rgba(124,92,255,.35),transparent 65%);
+  animation:auroraA 75s ease-in-out infinite alternate}
+.aurora-b{width:520px;height:520px;left:-140px;bottom:-200px;
+  background:radial-gradient(circle,rgba(92,255,216,.18),transparent 65%);
+  animation:auroraB 90s ease-in-out infinite alternate}
+@keyframes auroraA{to{transform:translate(-180px,140px) scale(1.25)}}
+@keyframes auroraB{to{transform:translate(160px,-120px) scale(1.15)}}
+
+/* ===== Tipografía ===== */
+h1,h2,h3{font-family:var(--sans);font-weight:700;line-height:1.06;letter-spacing:-.03em}
+h1 em,h2 em,h3 em{
+  font-style:normal;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* la cascada divide en palabras: el gradiente se aplica por palabra */
+h1 em .w,h2 em .w,h3 em .w{
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin-bottom:18px}
+.eyebrow-gold{color:var(--mint)}
+.kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:28px}
+
+/* ===== Cascada de titulares (motion.js crea .w-mask/.w) ===== */
+.w-mask{display:inline-block;overflow:hidden;vertical-align:top}
+.w{display:inline-block;transform:translateY(110%);transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.cascade-in .w{transform:none}
+
+/* ===== Secciones ===== */
+.section{padding:110px 0}
+.section-tight{padding:90px 0}
+.section-dark{position:relative}
+.section-dark::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 80% 0%,rgba(124,92,255,.14),transparent)}
+.section-dark > .container{position:relative}
+.section-head{max-width:760px;margin-bottom:56px}
+.section-head h2{font-size:clamp(2rem,5vw,3.2rem)}
+.section-sub{color:var(--text-soft);margin-top:16px;font-size:1.05rem;max-width:620px}
+
+/* ===== Botones y enlaces ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(90deg,var(--violet),var(--violet-soft));color:#fff;
+  font-weight:500;font-size:.95rem;
+  border:1px solid transparent;border-radius:12px;
+  padding:14px 26px;cursor:pointer;white-space:nowrap;
+  box-shadow:0 0 24px -6px rgba(124,92,255,.55);
+  transition:box-shadow .25s,transform .45s cubic-bezier(.2,1.2,.3,1);
+}
+.btn:hover{box-shadow:0 0 34px -4px rgba(124,92,255,.8)}
+.btn .btn-arrow{transition:transform .25s}
+.btn:hover .btn-arrow{transform:translate(3px,-3px)}
+.btn-sm{padding:9px 18px;font-size:.85rem}
+.btn-lg{padding:16px 30px;font-size:1rem}
+.btn-gold{background:var(--surface-2);border:1px solid var(--glass-line-strong);color:var(--text);box-shadow:none}
+.btn-gold:hover{border-color:var(--mint);box-shadow:none}
+.link-underline{
+  font-weight:500;padding-bottom:3px;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-size:100% 1px;background-position:0 100%;background-repeat:no-repeat;
+  transition:background-size .25s;
+}
+.link-underline:hover{background-size:100% 2px}
+.link-gold{color:var(--mint)}
+
+/* ===== Nav ===== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,11,18,.7);backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;transition:border-color .3s;
+}
+.nav.scrolled{border-bottom-color:var(--glass-line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{font-weight:700;font-size:1.1rem;letter-spacing:-.02em}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a:not(.btn){font-size:.9rem;color:var(--text-soft);transition:color .2s}
+.nav-links a:not(.btn):hover{color:var(--text)}
+.lang-toggle{
+  display:inline-flex;align-items:center;gap:2px;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;
+  color:var(--text-mute);background:var(--surface);
+  border:1px solid var(--glass-line);border-radius:999px;
+  padding:7px 12px;cursor:pointer;transition:border-color .2s;
+}
+.lang-toggle:hover{border-color:var(--glass-line-strong)}
+.lang-opt.is-active{color:var(--mint);font-weight:700}
+.lang-sep{opacity:.4}
+.nav-toggle{display:none;background:none;border:0;cursor:pointer;width:42px;height:42px}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--text);margin:5px auto}
+
+/* ===== Hero ===== */
+.hero{padding:110px 0 70px}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);max-width:1050px;margin-bottom:30px}
+.lead{font-size:clamp(1.05rem,1.8vw,1.25rem);color:var(--text-soft);max-width:620px;margin-bottom:38px}
+.hero-cta{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:28px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mint);margin-bottom:70px;
+  border:1px solid rgba(92,255,216,.25);border-radius:999px;padding:6px 14px;
+  background:rgba(92,255,216,.05);
+}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hero-stats{display:flex;border-top:1px solid var(--glass-line-strong)}
+.figure{flex:1;padding:24px 28px 0 0;border-right:1px solid var(--glass-line)}
+.figure + .figure{padding-left:28px}
+.figure:last-child{border-right:0;padding-right:0}
+.figure dt{font-size:clamp(2.4rem,4vw,3.4rem);font-weight:700;letter-spacing:-.03em;line-height:1;display:flex;align-items:baseline}
+.fig-plus{color:var(--mint);font-size:.55em;margin-left:3px}
+.figure dd{font-size:.85rem;color:var(--text-mute);margin-top:10px;max-width:200px}
+
+/* ===== Marquee ===== */
+.marquee{border-top:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line);overflow:hidden;padding:14px 0}
+.marquee-track{display:flex;width:max-content;animation:marquee 40s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-seq{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-mute);white-space:nowrap;padding-right:12px;
+}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ===== Reveal (progresivo) ===== */
+html.js .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease-out,transform .5s ease-out}
+html.js .reveal.in{opacity:1;transform:none}
+
+/* ===== Sobre mí ===== */
+.about{display:grid;grid-template-columns:340px 1fr;gap:70px;align-items:start}
+.about-frame{position:relative;aspect-ratio:4/5;border:1px solid var(--glass-line-strong);padding:10px;background:var(--surface)}
+.about-frame img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover}
+.about-mono{
+  position:absolute;inset:10px;display:flex;align-items:center;justify-content:center;
+  font-size:4rem;font-weight:700;color:var(--text-mute);background:var(--surface-2);
+}
+.fig-caption{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--text-mute);margin-top:12px}
+.about-socials{display:flex;gap:18px;margin-top:18px}
+.about-socials a{color:var(--text-mute);transition:color .2s}
+.about-socials a:hover{color:var(--mint)}
+.about-body h2{font-size:clamp(2rem,4.5vw,3rem);margin-bottom:24px}
+.about-lead{font-size:clamp(1.25rem,2.4vw,1.6rem);font-weight:500;line-height:1.35;margin-bottom:20px}
+.about-body > p:not(.about-lead):not(.eyebrow){color:var(--text-soft);margin-bottom:16px;max-width:580px}
+.about-points{list-style:none;margin:36px 0;border-top:1px solid var(--glass-line-strong)}
+.about-points li{display:flex;gap:22px;padding:20px 0;border-bottom:1px solid var(--glass-line)}
+.point-num{font-family:var(--mono);font-size:.75rem;color:var(--mint);padding-top:5px}
+.about-points b{display:block;font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.about-points span{color:var(--text-soft);font-size:.95rem}
+
+/* ===== Servicios ===== */
+.service-list{list-style:none;border-top:1px solid var(--glass-line-strong)}
+.service{
+  display:grid;grid-template-columns:70px 1fr 1.2fr;gap:28px;align-items:baseline;
+  padding:32px 10px;border-bottom:1px solid var(--glass-line);transition:background .25s;
+}
+.service:hover{background:var(--surface)}
+.service-num{font-family:var(--mono);font-size:.75rem;color:var(--mint)}
+.service h3{font-size:clamp(1.4rem,2.6vw,1.9rem)}
+.service p{color:var(--text-soft)}
+.feature-panel{
+  margin-top:60px;background:var(--surface);backdrop-filter:blur(12px);
+  border:1px solid var(--glass-line-strong);color:var(--text);border-radius:16px;
+  box-shadow:0 0 60px -20px rgba(124,92,255,.45);
+  padding:56px;display:grid;grid-template-columns:1.1fr 1fr;gap:56px;
+}
+.feature-panel h3{font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:16px}
+.feature-main p{color:var(--text-soft)}
+.feature-main a{color:var(--mint);border-bottom:1px solid currentColor}
+.feature-list{list-style:none}
+.feature-list li{padding:18px 0;border-bottom:1px solid var(--glass-line)}
+.feature-list li:first-child{border-top:1px solid var(--mint)}
+.feature-list b{display:block;font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.feature-list span{color:var(--text-soft);font-size:.92rem}
+
+/* ===== Proyectos: grid asimétrico ===== */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-flow:dense;gap:16px}
+.cell{
+  display:flex;flex-direction:column;gap:10px;
+  background:var(--surface);border:1px solid var(--glass-line);border-radius:14px;padding:26px;
+  position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s;
+}
+.cell::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(180px at var(--mx,50%) var(--my,50%),rgba(124,92,255,.22),transparent 70%);
+  opacity:0;transition:opacity .3s;
+}
+.cell:hover::after{opacity:1}
+.cell:hover{transform:translateY(-3px);border-color:var(--glass-line-strong)}
+.cell-tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);position:relative;z-index:1}
+.cell h3{font-size:1.25rem;font-weight:700;position:relative;z-index:1}
+.cell-desc{color:var(--text-soft);font-size:.95rem;flex:1;position:relative;z-index:1}
+.cell-feature{
+  grid-column:span 2;grid-row:span 2;
+  background:rgba(255,255,255,.06);border-color:var(--glass-line-strong);
+  box-shadow:0 0 60px -18px rgba(124,92,255,.5);
+  padding:40px;gap:14px;
+}
+.cell-feature h3{font-size:clamp(1.6rem,3vw,2.2rem)}
+.cell-feature .cell-desc{font-size:1.02rem;max-width:500px}
+.cell-right{grid-column:2 / span 2}
+.proj-note{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--text-mute);margin-top:28px}
+
+/* ===== Método ===== */
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:36px;border-top:1px solid var(--glass-line-strong);padding-top:38px}
+.step-num{font-size:2.6rem;font-weight:700;line-height:1;letter-spacing:-.03em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.steps h3{font-size:1.2rem;margin:14px 0 8px}
+.steps p{color:var(--text-soft);font-size:.93rem}
+.trust-strip{
+  margin-top:60px;padding:16px 0;text-align:center;
+  border-top:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line);
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);
+}
+
+/* ===== Troyan ===== */
+.troyan-head{display:flex;gap:28px;align-items:center;margin-bottom:56px}
+.troyan-logo{width:84px;height:84px;object-fit:contain;flex-shrink:0}
+.troyan-head h2{font-size:clamp(2rem,5vw,3.2rem)}
+.troyan-tagline{font-style:italic;color:var(--mint);margin-top:8px;font-size:1.1rem}
+.troyan-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:70px}
+.troyan-about p{color:var(--text-soft);margin-bottom:16px}
+.troyan-tech{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 30px}
+.troyan-tech li{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-soft);border:1px solid var(--glass-line);background:var(--surface);border-radius:999px;padding:6px 13px;
+}
+.troyan-feats{list-style:none;border-top:1px solid var(--mint)}
+.troyan-feats li{padding:20px 0;border-bottom:1px solid var(--glass-line)}
+.troyan-feats b{display:block;font-size:1.15rem;font-weight:700;margin-bottom:5px}
+.troyan-feats span{color:var(--text-soft);font-size:.93rem}
+.troyan-cta{
+  margin-top:64px;padding-top:38px;border-top:1px solid var(--glass-line);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.troyan-cta p{font-size:clamp(1.2rem,2.4vw,1.6rem);font-weight:500;max-width:540px}
+
+/* ===== Contacto ===== */
+.section-contact{padding:150px 0;text-align:center}
+.contact-title{font-size:clamp(3.4rem,10vw,7rem);margin:6px 0 18px}
+.section-contact .section-sub{margin:0 auto 46px}
+.contact-actions{display:flex;flex-direction:column;align-items:center;gap:24px}
+.contact-mail{
+  font-size:clamp(1.3rem,3.4vw,2.1rem);font-weight:500;letter-spacing:-.02em;
+  border-bottom:1px solid var(--glass-line-strong);padding-bottom:4px;
+  transition:color .2s,border-color .2s;
+}
+.contact-mail:hover{color:var(--mint);border-color:var(--mint)}
+
+/* ===== Footer ===== */
+.footer{border-top:1px solid var(--glass-line);padding:34px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.footer-brand{font-weight:700;font-size:1rem;letter-spacing:-.02em}
+.footer-meta,.footer-coords{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute)}
+.cursor-blink{color:var(--mint);animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== Movimiento reducido ===== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .aurora-a,.aurora-b{animation:none}
+  .marquee-track{animation:none}
+  .dot-live{animation:none}
+  .cursor-blink{animation:none}
+  html.js .reveal{opacity:1;transform:none;transition:none}
+  .w{transform:none;transition:none}
+  .btn{transition:none}
+  .btn .btn-arrow{transition:none}
+  .cell::after{display:none}
+}
+
+/* ===== Responsive ===== */
+@media(max-width:960px){
+  .about{grid-template-columns:1fr;gap:44px}
+  .about-media{max-width:340px}
+  .feature-panel{grid-template-columns:1fr;gap:36px;padding:40px 28px}
+  .troyan-grid{grid-template-columns:1fr;gap:44px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .proj-grid{grid-template-columns:repeat(2,1fr)}
+  .cell-feature{grid-column:span 2}
+  .cell-right{grid-column:span 2}
+  .service{grid-template-columns:56px 1fr}
+  .service p{grid-column:2}
+}
+@media(max-width:860px){
+  .nav-toggle{display:block}
+  .nav-links{
+    position:absolute;top:76px;left:0;right:0;
+    background:rgba(11,11,18,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-line);
+    flex-direction:column;align-items:flex-start;padding:26px 28px;gap:20px;display:none;
+  }
+  .nav-links.open{display:flex}
+}
+@media(max-width:640px){
+  .container{padding:0 20px}
+  .section{padding:80px 0}
+  .section-tight{padding:64px 0}
+  .hero{padding:70px 0 50px}
+  .hero-stats{flex-direction:column}
+  .figure{border-right:0;border-bottom:1px solid var(--glass-line);padding:18px 0}
+  .figure + .figure{padding-left:0}
+  .figure:last-child{border-bottom:0}
+  .proj-grid{grid-template-columns:1fr}
+  .cell-feature,.cell-right{grid-column:auto;grid-row:auto}
+  .cell-feature{padding:30px 24px}
+  .steps{grid-template-columns:1fr}
+  .feature-panel{padding:34px 22px}
+  .troyan-cta{flex-direction:column;align-items:flex-start}
+  .section-contact{padding:100px 0}
+}
+```
+
+- [ ] **Step 2: Verificar**
+
+```bash
+grep -c -- '--void:#0B0B12\|--violet:#7C5CFF\|--mint:#5CFFD8' assets/styles.css   # → 3
+grep -c 'Fraunces\|terracotta\|paper\|--ink' assets/styles.css                     # → 0 (exit 1)
+grep -c 'auroraA\|auroraB' assets/styles.css                                       # → 4 (2 defs + 2 usos)
+grep -c 'w-mask\|cascade-in' assets/styles.css                                     # → ≥3
+python3 -c "c=open('assets/styles.css').read(); assert c.count('{')==c.count('}'), 'braces'; print('braces OK')"
+```
+
+Abrir `http://localhost:8080`: fondo oscuro con aurora moviéndose, titulares en gradiente, vidrio en tarjetas. (La cascada aún no anima: llega en Task 4.)
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add assets/styles.css
+git commit -m "Aurora: piel oscura violeta/menta con superficies de vidrio
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
+
+---
+
+### Task 3: `assets/demos.css` — re-tint oscuro del modal
+
+**Files:**
+- Modify: `assets/demos.css` (solo los bloques indicados; el resto del archivo queda igual)
+
+**Interfaces:**
+- Consumes: contratos demos.js (mismas variables compat bajo `.modal`).
+
+- [ ] **Step 1: Reemplazar el bloque de `.demo-btn` (inicio del archivo) por**
+
+```css
+/* Sin JS no hay demos: los botones solo aparecen con html.js */
+html:not(.js) .demo-btn{display:none}
+
+/* Botón "Probar demo" (vive dentro de las celdas destacadas de vidrio) */
+.demo-btn{
+  margin-top:18px;align-self:flex-start;position:relative;z-index:1;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:#5CFFD8;background:none;cursor:pointer;
+  border:1px solid #5CFFD8;border-radius:999px;padding:10px 18px;
+  transition:background .2s,color .2s;
+}
+.demo-btn:hover{background:#5CFFD8;color:#0B0B12}
+```
+
+- [ ] **Step 2: Reemplazar el bloque de variables de `.modal` por**
+
+(Solo cambian los VALORES; los nombres de variables son contrato de demos.js y no se tocan.)
+
+```css
+.modal{
+  --accent:#7C5CFF;
+  --accent-2:#5CFFD8;
+  --surface:#1A1A28;
+  --surface-2:#232336;
+  --bg-soft:#12121C;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.18);
+  --text:#F2F1F7;
+  --muted:#A5A2BA;
+  --ok:#4ADE80;
+  --warn:#FBBF24;
+  --bad:#F87171;
+  position:fixed;inset:0;z-index:100;display:none;
+  font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text);
+}
+```
+
+- [ ] **Step 3: Aplicar estos reemplazos puntuales en el resto del archivo**
+
+1. `.modal-backdrop`: `background:rgba(20,19,16,.55)` → `background:rgba(0,0,0,.6)`.
+2. `.modal-dialog`: `box-shadow:0 40px 90px -30px rgba(20,19,16,.5)` → `box-shadow:0 0 80px -20px rgba(124,92,255,.4)`.
+3. Fraunces fuera (heredan Space Grotesk del `.modal`), pares exactos:
+   - `.modal-head h3{font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:560}` → `.modal-head h3{font-size:1.2rem;font-weight:700}`
+   - `.d-title{font-family:'Fraunces',Georgia,serif;font-size:1.1rem;font-weight:560;margin-bottom:4px}` → `.d-title{font-size:1.1rem;font-weight:700;margin-bottom:4px}`
+   - `.vac-stat .n{font-family:'Fraunces',Georgia,serif;font-size:1.7rem;font-weight:600;line-height:1}` → `.vac-stat .n{font-size:1.7rem;font-weight:700;line-height:1}`
+   - `.cal-head .m{font-family:'Fraunces',Georgia,serif;font-weight:560;font-size:.98rem;text-transform:capitalize}` → `.cal-head .m{font-weight:700;font-size:.98rem;text-transform:capitalize}`
+   - `.kb-col-head .t{font-family:'Fraunces',Georgia,serif;font-weight:560;font-size:.92rem}` → `.kb-col-head .t{font-weight:700;font-size:.92rem}`
+4. Tintes terracota → violeta: `rgba(138,75,38,.14)` → `rgba(124,92,255,.22)` (en `.cal-day.in-range` y `.rb-slot.in`); `rgba(138,75,38,.05)` → `rgba(124,92,255,.08)` (en `.kb-col.drag-over`); `rgba(138,75,38,.06)` → `rgba(124,92,255,.1)` (en `.rb-room.sel`).
+5. Tintes de estado (fondos con color fijo): `rgba(179,38,30,.06)` → `rgba(248,113,113,.1)`; `rgba(154,107,0,.06)` y `rgba(154,107,0,.08)` → `rgba(251,191,36,.1)`; `rgba(46,125,79,.06)` y `rgba(46,125,79,.08)` → `rgba(74,222,128,.1)`; `rgba(179,38,30,.3)` → `rgba(248,113,113,.35)` y el color tachado `rgba(179,38,30,.6)` → `rgba(248,113,113,.7)` (en `.rb-slot.occ`).
+6. `.kb-card`: `background:var(--bg-soft)` se conserva (ya es var). `.cal-day.edge` y `.rb-slot.edge`: `color:#fff` se conserva (blanco sobre violeta cumple AA).
+
+- [ ] **Step 4: Verificar**
+
+```bash
+grep -c 'Fraunces' assets/demos.css        # → 0 (exit 1)
+grep -c '138,75,38\|8A4B26\|C7A469\|179,38,30\|154,107,0\|46,125,79\|20,19,16' assets/demos.css   # → 0 (exit 1)
+grep -c -- '--accent:#7C5CFF' assets/demos.css   # → 1
+python3 -c "c=open('assets/demos.css').read(); assert c.count('{')==c.count('}'); print('braces OK')"
+```
+
+Abrir un demo en el navegador: modal oscuro violeta/menta, estados verde/ámbar/rojo legibles.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add assets/demos.css
+git commit -m "Aurora: re-tint oscuro del modal y los demos
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
+
+---
+
+### Task 4: `assets/motion.js` — módulo de animaciones
+
+**Files:**
+- Create: `assets/motion.js`
+
+**Interfaces:**
+- Consumes: clases CSS `.w-mask/.w/.cascade-in` y vars `--mx/--my` (Task 2); evento `i18n:applied` (Task 1).
+- Produces: nada consumido por otros; módulo hoja.
+
+- [ ] **Step 1: Crear `assets/motion.js` con este contenido**
+
+```js
+// Módulo de animaciones Aurora Dark: cascada de titulares,
+// botones magnéticos y glow en tarjetas. La aurora de fondo es CSS puro.
+(function () {
+  'use strict';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(pointer: fine)').matches;
+
+  /* ===== Cascada de titulares ===== */
+  const CASCADE_SEL = 'h1, .section-head h2, .about-body h2, .troyan-head h2, .contact-title, .about-lead';
+  const cascadeEls = Array.from(document.querySelectorAll(CASCADE_SEL));
+
+  // Divide el contenido en palabras enmascaradas SIN re-parentar el marcado
+  // inline (em/strong conservan su anidación); el stagger se agrupa por línea
+  // leyendo offsetTop, así el efecto es "línea por línea".
+  function wrapWords(el) {
+    if (el.dataset.split === '1') return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(node => {
+      const frag = document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        const mask = document.createElement('span');
+        mask.className = 'w-mask';
+        const w = document.createElement('span');
+        w.className = 'w';
+        w.textContent = part;
+        mask.appendChild(w);
+        frag.appendChild(mask);
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    el.dataset.split = '1';
+    staggerByLine(el);
+  }
+
+  function staggerByLine(el) {
+    let lastTop = null, line = -1;
+    el.querySelectorAll('.w').forEach(w => {
+      const top = w.parentNode.offsetTop;
+      if (top !== lastTop) { line++; lastTop = top; }
+      w.style.transitionDelay = (line * 90) + 'ms';
+    });
+  }
+
+  if (!reduced) {
+    cascadeEls.forEach(wrapWords);
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('cascade-in'); cio.unobserve(en.target); }
+      });
+    }, { threshold: 0.3 });
+    cascadeEls.forEach(el => cio.observe(el));
+
+    // El toggle de idioma reescribe innerHTML (borra los spans): re-dividir.
+    // Los elementos ya revelados conservan .cascade-in, así que las palabras
+    // nuevas aparecen directas, sin re-animar.
+    document.addEventListener('i18n:applied', () => {
+      cascadeEls.forEach(el => { delete el.dataset.split; wrapWords(el); });
+    });
+
+    // Al cambiar el ancho cambian las líneas: recalcular solo el stagger.
+    let rt = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(() => cascadeEls.forEach(staggerByLine), 200);
+    }, { passive: true });
+  }
+
+  /* ===== Botones magnéticos ===== */
+  if (fine && !reduced) {
+    document.querySelectorAll('.btn').forEach(btn => {
+      let raf = 0, last = null;
+      btn.addEventListener('pointermove', e => {
+        last = e;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const r = btn.getBoundingClientRect();
+          const dx = (last.clientX - r.left - r.width / 2) / (r.width / 2);
+          const dy = (last.clientY - r.top - r.height / 2) / (r.height / 2);
+          btn.style.transform = 'translate(' + (dx * 8).toFixed(1) + 'px,' + (dy * 8).toFixed(1) + 'px)';
+        });
+      }, { passive: true });
+      btn.addEventListener('pointerleave', () => {
+        if (raf) { cancelAnimationFrame(raf); raf = 0; }
+        btn.style.transform = '';
+      });
+    });
+  }
+
+  /* ===== Glow que sigue al cursor en las celdas ===== */
+  if (fine && !reduced) {
+    document.querySelectorAll('.cell').forEach(cell => {
+      let raf = 0, last = null;
+      cell.addEventListener('pointermove', e => {
+        last = e;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const r = cell.getBoundingClientRect();
+          cell.style.setProperty('--mx', (last.clientX - r.left) + 'px');
+          cell.style.setProperty('--my', (last.clientY - r.top) + 'px');
+        });
+      }, { passive: true });
+    });
+  }
+})();
+```
+
+- [ ] **Step 2: Verificar**
+
+```bash
+node --check assets/motion.js
+grep -c 'i18n:applied' assets/motion.js    # → 1
+```
+
+En navegador: titulares entran en cascada al hacer scroll; al cambiar a EN los titulares se reescriben íntegros y siguen divididos (inspeccionar: `document.querySelector('h1 .w')` existe tras el toggle); los CTAs se inclinan hacia el cursor y regresan; las celdas de proyectos encienden el glow siguiendo el mouse. Con reduced-motion emulado: nada de lo anterior (y `document.querySelector('.w')` → null).
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add assets/motion.js
+git commit -m "Aurora: módulo de animaciones (cascada, magnéticos, glow)
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
+
+---
+
+### Task 5: README + verificación final
+
+**Files:**
+- Modify: `README.md` (1 línea)
+
+- [ ] **Step 1: Actualizar la línea de descripción del diseño en README.md**
+
+```markdown
+<!-- ANTES -->
+Diseño "Editorial Luxe" (papel/tinta/terracota), bilingüe ES/EN.
+<!-- DESPUÉS -->
+Diseño "Aurora Dark" (oscuro violeta/menta, vidrio, animaciones), bilingüe ES/EN.
+```
+
+Y en el bloque Estructura, tras la línea de `assets/main.js`, añadir:
+
+```
+assets/motion.js    # Animaciones (cascada de titulares, magnéticos, glow)
+```
+
+- [ ] **Step 2: Checks de regresión**
+
+```bash
+grep -c '?v=6' index.html   # → 6
+grep -c '?v=5' index.html || true   # → 0
+node --check assets/main.js && node --check assets/i18n.js && node --check assets/motion.js
+# cobertura de claves i18n intacta:
+grep -o 'data-i18n="[^"]*"' index.html | sed 's/data-i18n="//;s/"//' | sort -u > /tmp/hk.txt
+grep -o "'[a-z0-9.]*':" assets/i18n.js | sed "s/[':]//g" | sort -u > /tmp/ek.txt
+comm -23 /tmp/hk.txt /tmp/ek.txt    # → vacío
+```
+
+- [ ] **Step 3: Checklist de navegador (controller, spec §8)**
+
+1. Harness previo completo: desktop/tablet/móvil, toggle + persistencia + round-trip, 3 demos, sin-JS, consola limpia.
+2. Aurora: `getComputedStyle(document.querySelector('.aurora-a')).animationName === 'auroraA'`; bajo reduced-motion → `'none'`.
+3. Cascada tras toggle ×4 (ES→EN→ES→EN): `h1` sin `.w` anidados dobles (`document.querySelectorAll('h1 .w .w').length === 0`) y texto íntegro en ambos idiomas.
+4. Glow: `--mx/--my` cambian al mover el cursor sobre una `.cell`.
+5. Magnético: `transform` no vacío durante hover del `.btn`, vacío tras `pointerleave`.
+6. Contraste spot-check del modal re-tintado (texto claro sobre `#1A1A28`).
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add README.md
+git commit -m "Aurora: README actualizado
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
