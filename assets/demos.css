@@ -37,7 +37,7 @@ html:not(.js) .demo-btn{display:none}
   font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text);
 }
 .modal.open{display:block}
-.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .modal-dialog{
   position:relative;z-index:1;
   width:min(940px,calc(100vw - 32px));max-height:calc(100vh - 48px);
