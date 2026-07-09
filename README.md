@@ -1,7 +1,7 @@
 # Rodrigofdzr — Portafolio
 
 Sitio de portafolio personal para servicios de desarrollo de software a medida.
-Página única, estática (HTML + CSS + JS), sin dependencias de build. Diseño "Editorial Luxe" (papel/tinta/terracota), bilingüe ES/EN.
+Página única, estática (HTML + CSS + JS), sin dependencias de build. Diseño "Aurora Dark" (oscuro violeta/menta, vidrio, animaciones), bilingüe ES/EN.
 
 ## Estructura
 
@@ -9,6 +9,7 @@ Página única, estática (HTML + CSS + JS), sin dependencias de build. Diseño 
 index.html          # Página principal (español + atributos data-i18n)
 assets/styles.css   # Sistema de diseño y estilos
 assets/main.js      # Interacciones (reveals, contadores, menú móvil)
+assets/motion.js    # Animaciones (cascada de titulares, magnéticos, glow)
 assets/i18n.js      # Toggle bilingüe ES/EN (localStorage)
 assets/demos.css    # Estilos de los demos interactivos
 assets/demos.js     # Lógica de los demos (datos ficticios)
