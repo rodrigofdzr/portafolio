@@ -167,6 +167,7 @@
       o.classList.toggle('is-active', o.dataset.lang === lang)
     );
     try { localStorage.setItem('lang', lang); } catch (e) { /* modo privado */ }
+    document.dispatchEvent(new CustomEvent('i18n:applied', { detail: { lang: lang } }));
   }
 
   btn.addEventListener('click', () => {
